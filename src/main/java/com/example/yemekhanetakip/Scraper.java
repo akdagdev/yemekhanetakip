@@ -1,5 +1,12 @@
+/*
+    Scraper class is designed for scraping the Gazi University's meal list webpage.
+    It fetches the url, parses it using jsoup library and converts the html table into usable form.
+ */
 package com.example.yemekhanetakip;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,12 +16,11 @@ import org.jsoup.select.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Scraper {
     private Document document;
-    private HashMap<String, ArrayList<String>> courses = new HashMap<>();
+    private final HashMap<LocalDate, ArrayList<String>> courses = new HashMap<>();
 
     public Document getDocument() {
         return document;
@@ -29,7 +35,7 @@ public class Scraper {
 
     // We don't want our group members to change the value of "courses" accidentally
     // So there is only a public getter function, no setter
-    public HashMap<String, ArrayList<String>> getCourses() {
+    public HashMap<LocalDate, ArrayList<String>> getCourses() {
         return courses;
     }
 
@@ -42,50 +48,51 @@ public class Scraper {
     }
 
     private void initialize(){
-        String[][] data = readTableAsArray(findTable(document));
+        String[][] table = readTableAsArray(findTable(document));
 
         try {
             String current = null;
-            for (int i = 0; i < data.length; i++) {
-                for (int j = 0; j < data[i].length; j++) {
-                    if(data[i][j].toLowerCase().startsWith("kalori"))
+            for (int i = 0; i < table.length; i++) {
+                for (int j = 0; j < table[i].length; j++) {
+                    // In such cases, skip
+                    if(table[i][j].toLowerCase().startsWith("kalori") || table[i][j].isBlank()){
                         continue;
+                    }
 
                     Pattern pattern = Pattern.compile("\\d+");
-                    Matcher matcher = pattern.matcher(data[i][j]);
+                    Matcher matcher = pattern.matcher(table[i][j]);
 
                     if(matcher.find()) {
                         // If regular expression detects a number then it is a day title
-                        current = data[i][j];
-                        courses.put(current, new ArrayList<>());
+                        current = table[i][j];
+                        courses.put(stringToDate(current), new ArrayList<>());
                     } else {
-                        courses.get(current).add(data[i][j]);
+                        courses.get(stringToDate(current)).add(table[i][j]);
                     }
                 }
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
             throw new RuntimeException(e);
         }
 
-        for (String key : courses.keySet()) {
+        for (LocalDate key : courses.keySet()) {
             System.out.println(key);
             System.out.println(courses.get(key));
         }
 
     }
 
+    // Fetches the desired url as html
     private Document readDocument(String url) {
         Document doc;
-
         try {
             doc = Jsoup.connect(url).get();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
             throw new RuntimeException(e);
         }
-
         return doc;
     }
 
@@ -94,7 +101,7 @@ public class Scraper {
         return document.select("tbody").first();
     }
 
-
+    // Converts the html table element into a Java array
     private String[][] readTableAsArray(Element table) {
         Elements trs = table.select("tr");
         String[][] data = new String[5][trs.size()];
@@ -109,5 +116,12 @@ public class Scraper {
         }
 
         return data;
+    }
+
+    // Converts Turkish local date text such as "25 Nisan 2025 Cuma" into LocalDate
+    private LocalDate stringToDate(String text){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy EEEE", Locale.of("tr", "TR"));
+
+        return LocalDate.parse(text, formatter);
     }
 }
