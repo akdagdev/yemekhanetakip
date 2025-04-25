@@ -106,8 +106,6 @@ public class Scraper {
         Elements trs = table.select("tr");
         String[][] data = new String[5][trs.size()];
 
-        HashMap<String, ArrayList<String>> yemekler = new HashMap<>();
-
         for (int i = 0; i < trs.size(); i++) {
             Elements tds = trs.get(i).select("td");
             for (int j = 0; j < tds.size(); j++) {
