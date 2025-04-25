@@ -4,6 +4,6 @@ module com.example.yemekhanetakip {
     requires org.jsoup;
 
 
-    opens com.example.yemekhanetakip to javafx.fxml;
-    exports com.example.yemekhanetakip;
+    opens yemekhanetakip to javafx.fxml;
+    exports yemekhanetakip;
 }

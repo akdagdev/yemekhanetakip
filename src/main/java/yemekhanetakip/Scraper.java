@@ -2,7 +2,7 @@
     Scraper class is designed for scraping the Gazi University's meal list webpage.
     It fetches the url, parses it using jsoup library and converts the html table into usable form.
  */
-package com.example.yemekhanetakip;
+package yemekhanetakip;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +33,7 @@ public class Scraper {
         initialize();
     }
 
-    // We don't want our group members to change the value of "courses" accidentally
+    // We don't want our group members to change the value of "courses" accidentally,
     // So there is only a public getter function, no setter
     public HashMap<LocalDate, ArrayList<String>> getCourses() {
         return courses;
@@ -42,7 +42,7 @@ public class Scraper {
     // Constructor
     public Scraper(String url) {
 
-        // Reads the website from internet and sets it as the document
+        // Reads the website from the internet and sets it as the document
         // This class is designed especially for scraping https://mediko.gazi.edu.tr/view/page/20412
         setDocument(readDocument(url));
     }
@@ -63,7 +63,7 @@ public class Scraper {
                     Matcher matcher = pattern.matcher(table[i][j]);
 
                     if(matcher.find()) {
-                        // If regular expression detects a number then it is a day title
+                        // If a regular expression detects a number, then it is a day title
                         current = table[i][j];
                         courses.put(stringToDate(current), new ArrayList<>());
                     } else {
@@ -96,12 +96,12 @@ public class Scraper {
         return doc;
     }
 
-    // Finds the course list as html element from the document and returns it
+    // Finds the course list as HTML element from the document and returns it
     private Element findTable(Document document) {
         return document.select("tbody").first();
     }
 
-    // Converts the html table element into a Java array
+    // Converts the HTML table element into a Java array
     private String[][] readTableAsArray(Element table) {
         Elements trs = table.select("tr");
         String[][] data = new String[5][trs.size()];
