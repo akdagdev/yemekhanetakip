@@ -7,13 +7,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class ProTestApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Scraper scraper = new Scraper("https://mediko.gazi.edu.tr/view/page/20412");
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(ProTestApp.class.getResource("ProTest.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage.setTitle("Gazi yemekhane Takip");
         stage.setScene(scene);
         stage.show();
     }

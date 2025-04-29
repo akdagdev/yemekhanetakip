@@ -21,6 +21,7 @@ import java.util.HashMap;
 public class Scraper {
     private Document document;
     private final HashMap<LocalDate, ArrayList<String>> courses = new HashMap<>();
+    private final HashMap<LocalDate, String> calories = new HashMap<>();
 
     public Document getDocument() {
         return document;
@@ -39,6 +40,11 @@ public class Scraper {
         return courses;
     }
 
+    // Getter for calories
+    public HashMap<LocalDate, String> getCalories() {
+        return calories;
+    }
+
     // Constructor
     public Scraper(String url) {
 
@@ -54,8 +60,16 @@ public class Scraper {
             String current = null;
             for (int i = 0; i < table.length; i++) {
                 for (int j = 0; j < table[i].length; j++) {
-                    // In such cases, skip
-                    if(table[i][j].toLowerCase().startsWith("kalori") || table[i][j].isBlank()){
+                    // Skip empty entries
+                    if(table[i][j].isBlank()){
+                        continue;
+                    }
+
+                    // Capture calorie information
+                    if(table[i][j].toLowerCase().startsWith("kalori")) {
+                        if(current != null) {
+                            calories.put(stringToDate(current), table[i][j]);
+                        }
                         continue;
                     }
 
@@ -80,8 +94,10 @@ public class Scraper {
         for (LocalDate key : courses.keySet()) {
             System.out.println(key);
             System.out.println(courses.get(key));
+            if (calories.containsKey(key)) {
+                System.out.println(calories.get(key));
+            }
         }
-
     }
 
     // Fetches the desired url as html
@@ -121,5 +137,39 @@ public class Scraper {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy EEEE", Locale.of("tr", "TR"));
 
         return LocalDate.parse(text, formatter);
+    }
+
+    // Returns the menu for a specific date in the format expected by the controller
+    public String getMenuForDate(String dateString) {
+        LocalDate date = LocalDate.parse(dateString);
+        ArrayList<String> menuItems = courses.get(date);
+        
+        if (menuItems == null || menuItems.isEmpty()) {
+            return "[]\n" + date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        }
+        
+        // Format the menu items as a string
+        StringBuilder menuBuilder = new StringBuilder("[");
+        for (int i = 0; i < menuItems.size(); i++) {
+            menuBuilder.append(menuItems.get(i));
+            if (i < menuItems.size() - 1) {
+                menuBuilder.append(", ");
+            }
+        }
+        menuBuilder.append("]\n").append(date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        
+        return menuBuilder.toString();
+    }
+    
+    // Returns the calorie information for a specific date
+    public String getCaloriesForDate(String dateString) {
+        LocalDate date = LocalDate.parse(dateString);
+        String calorieInfo = calories.get(date);
+        
+        if (calorieInfo == null) {
+            return "Bilgi yok";
+        }
+        
+        return calorieInfo;
     }
 }

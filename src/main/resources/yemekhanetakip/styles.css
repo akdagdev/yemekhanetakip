@@ -1,0 +1,427 @@
+/* Modern UI Theme - Yemekhane Takip */
+.root {
+    -fx-transition: background-color 0.3s ease;
+}
+
+.main-container {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15px;
+    -fx-transition: background-color 0.3s ease;
+}
+
+/* Header styles */
+.app-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212529;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.header-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #212529;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Header separator */
+.header-separator {
+    -fx-background-color: #e9ecef;
+    -fx-opacity: 0.8;
+}
+
+/* Navigation panel styles */
+.nav-panel {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 2);
+}
+
+.nav-item {
+    -fx-padding: 10px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8px;
+    -fx-transition: background-color 0.2s;
+}
+
+.nav-item:hover {
+    -fx-background-color: #f1f3f5;
+    -fx-background-radius: 8px;
+}
+
+.nav-label {
+    -fx-text-fill: #212529;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Menu panel styles */
+.menu-panel {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 2);
+}
+
+.menu-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #343a40;
+    -fx-alignment: center;
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 4, 0, 0, 0);
+}
+
+.menu-items {
+    -fx-padding: 15px 0;
+}
+
+.menu-item {
+    -fx-padding: 8px;
+    -fx-alignment: center-left;
+    -fx-background-radius: 8px;
+    -fx-transition: background-color 0.2s;
+}
+
+.menu-item:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+.meal-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #495057;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.favorite-checkbox {
+    -fx-text-fill: #fcc419;
+    -fx-transition: scale 0.2s;
+}
+
+.favorite-checkbox:selected {
+    -fx-text-fill: #fcc419;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+/* Date picker styles */
+.date-picker {
+    -fx-font-size: 14px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 4, 0, 0, 0);
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 0 8px 8px 0;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #e9ecef;
+}
+
+/* Section separator */
+.section-separator {
+    -fx-background-color: #e9ecef;
+    -fx-opacity: 0.8;
+}
+
+/* Nutrition chart styles */
+.nutrition-chart {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 2);
+    -fx-padding: 15px;
+}
+
+.nutrition-chart .chart-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #343a40;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.nutrition-chart .axis-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6c757d;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.nutrition-chart .axis {
+    -fx-tick-label-fill: #6c757d;
+    -fx-tick-mark-visible: true;
+    -fx-tick-length: 5;
+}
+
+.nutrition-chart .chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.nutrition-chart .chart-bar {
+    -fx-bar-fill: #4dabf7;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-background-insets: 0, 1, 2;
+}
+
+.nutrition-chart .chart-bar:hover {
+    -fx-bar-fill: #228be6;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 5, 0, 0, 0);
+}
+
+.nutrition-chart .chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.nutrition-chart .chart-legend-item {
+    -fx-text-fill: #495057;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Button styles */
+.button {
+    -fx-background-color: #4dabf7;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.2s;
+}
+
+.button:hover {
+    -fx-background-color: #228be6;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+/* Scroll pane styles */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 1;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-padding: 1 0 0 0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #ced4da;
+    -fx-background-radius: 10px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #adb5bd;
+}
+
+/* Modern Theme Toggle Button */
+.theme-toggle {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-padding: 4px;
+    -fx-cursor: hand;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1px;
+    -fx-transition: all 0.3s ease;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-min-width: 60px;
+    -fx-min-height: 30px;
+}
+
+.theme-toggle .icon {
+    -fx-fill: #fcc419;
+    -fx-transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 0);
+}
+
+.theme-toggle:selected {
+    -fx-background-color: #343a40;
+    -fx-border-color: #495057;
+}
+
+.theme-toggle:selected .icon {
+    -fx-fill: #ffffff;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    -fx-background-color: #1a1b1e;
+}
+
+.dark-mode .main-container {
+    -fx-background-color: #1a1b1e;
+}
+
+.dark-mode .app-title {
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .header-label {
+    -fx-text-fill: #adb5bd;
+}
+
+.dark-mode .label {
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .header-separator {
+    -fx-background-color: #2c2e33;
+}
+
+.dark-mode .nav-panel,
+.dark-mode .menu-panel {
+    -fx-background-color: #2c2e33;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 2);
+}
+
+.dark-mode .nav-item:hover {
+    -fx-background-color: #3a3d44;
+}
+
+.dark-mode .nav-label,
+.dark-mode .menu-title {
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .menu-item:hover {
+    -fx-background-color: #3a3d44;
+}
+
+.dark-mode .section-separator {
+    -fx-background-color: #2c2e33;
+}
+
+.dark-mode .date-picker {
+    -fx-background-color: #2c2e33;
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .date-picker .arrow-button {
+    -fx-background-color: #3a3d44;
+}
+
+.dark-mode .date-picker .arrow-button:hover {
+    -fx-background-color: #4a4d54;
+}
+
+.dark-mode .date-picker .text-field {
+    -fx-background-color: #2c2e33;
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .button {
+    -fx-background-color: #4dabf7;
+    -fx-text-fill: #ffffff;
+}
+
+.dark-mode .button:hover {
+    -fx-background-color: #228be6;
+}
+
+.dark-mode .nutrition-chart {
+    -fx-background-color: #2c2e33;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 2);
+    -fx-padding: 15px;
+}
+
+.dark-mode .nutrition-chart .chart-title {
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .nutrition-chart .axis-label {
+    -fx-text-fill: #adb5bd;
+}
+
+.dark-mode .nutrition-chart .axis {
+    -fx-tick-label-fill: #adb5bd;
+    -fx-tick-mark-visible: true;
+    -fx-tick-length: 5;
+}
+
+.dark-mode .nutrition-chart .chart-plot-background {
+    -fx-background-color: #2c2e33;
+}
+
+.dark-mode .nutrition-chart .chart-vertical-grid-lines,
+.dark-mode .nutrition-chart .chart-horizontal-grid-lines {
+    -fx-stroke: #3a3d44;
+}
+
+.dark-mode .nutrition-chart .chart-bar {
+    -fx-bar-fill: #4dabf7;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-background-insets: 0, 1, 2;
+}
+
+.dark-mode .nutrition-chart .chart-bar:hover {
+    -fx-bar-fill: #228be6;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 5, 0, 0, 0);
+}
+
+.dark-mode .nutrition-chart .chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.dark-mode .nutrition-chart .chart-legend-item {
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .menu-title {
+    -fx-text-fill: #e9ecef;
+    -fx-background-color: #2c2e33;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 0);
+}
+
+.dark-mode .menu-date-label {
+    -fx-text-fill: #adb5bd;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.dark-mode .scroll-bar .thumb {
+    -fx-background-color: #3a3d44;
+}
+
+.dark-mode .scroll-bar .thumb:hover {
+    -fx-background-color: #4a4d54;
+}
+
+.dark-mode .theme-toggle {
+    -fx-background-color: #2c2e33;
+    -fx-border-color: #3a3d44;
+}
+
+.dark-mode .theme-toggle:hover {
+    -fx-background-color: #3a3d44;
+}
+
+.dark-mode .theme-toggle:selected {
+    -fx-background-color: #4dabf7;
+    -fx-border-color: #228be6;
+} 
