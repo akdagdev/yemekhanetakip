@@ -9,7 +9,6 @@
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="main-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.ProTestController">
     
-    <!-- App Header -->
     <HBox alignment="CENTER_LEFT" layoutX="15.0" layoutY="5.0" prefHeight="36.0" prefWidth="770.0" spacing="15">
         <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -18,16 +17,12 @@
         </ImageView>
         <Label styleClass="app-title" text="Yemekhane Takip" />
         
-        <!-- Spacer -->
         <Region HBox.hgrow="ALWAYS" />
     </HBox>
     
-    <!-- Main Header Separator -->
     <Separator layoutY="45.0" prefHeight="2.0" prefWidth="800.0" styleClass="header-separator" />
     
-    <!-- Content Container -->
     <HBox layoutX="14.0" layoutY="60.0" prefHeight="520.0" prefWidth="770.0" spacing="20">
-        <!-- Left Navigation Panel -->
         <VBox prefHeight="500.0" prefWidth="180.0" spacing="10" styleClass="nav-panel">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
@@ -95,9 +90,7 @@
             </children>
         </VBox>
 
-        <!-- Content Pane -->
         <AnchorPane fx:id="contentPane" prefHeight="520.0" prefWidth="570.0">
-            <!-- Menu Panel -->
             <VBox prefHeight="500.0" prefWidth="265.0" spacing="15" styleClass="menu-panel">
                 <padding>
                     <Insets bottom="15" left="15" right="15" top="15" />
@@ -146,7 +139,6 @@
                 </children>
             </VBox>
             
-            <!-- Nutrition Chart Panel -->
             <VBox layoutX="280.0" prefHeight="500.0" prefWidth="285.0" styleClass="nutrition-chart">
                 <padding>
                     <Insets bottom="10" left="10" right="10" top="10" />

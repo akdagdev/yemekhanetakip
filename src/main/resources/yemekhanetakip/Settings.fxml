@@ -14,7 +14,6 @@
                 <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
             <children>
-                <!-- Settings Header -->
                 <Label styleClass="settings-title" text="Ayarlar">
                     <font>
                         <Font size="24.0" />
@@ -23,14 +22,12 @@
                 
                 <Separator styleClass="section-separator" />
                 
-                <!-- Appearance Settings Section -->
                 <Label styleClass="settings-section-title" text="Görünüm">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
                 
-                <!-- Theme Selection -->
                 <HBox alignment="CENTER_LEFT" spacing="15">
                     <Label styleClass="settings-label" text="Tema:" />
                     <ComboBox fx:id="themeSelector" prefWidth="150.0" promptText="Tema Seçin">
@@ -43,13 +40,11 @@
                     </ComboBox>
                 </HBox>
                 
-                <!-- Primary Color Selection -->
                 <HBox alignment="CENTER_LEFT" spacing="15">
                     <Label styleClass="settings-label" text="Ana Renk:" />
                     <ColorPicker fx:id="primaryColorPicker" prefWidth="150.0" />
                 </HBox>
                 
-                <!-- Secondary Color Selection -->
                 <HBox alignment="CENTER_LEFT" spacing="15">
                     <Label styleClass="settings-label" text="İkincil Renk:" />
                     <ColorPicker fx:id="secondaryColorPicker" prefWidth="150.0" />
@@ -57,21 +52,18 @@
                 
                 <Separator styleClass="section-separator" />
                 
-                <!-- General Settings Section -->
                 <Label styleClass="settings-section-title" text="Genel Ayarlar">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
                 
-                <!-- Font Size Setting -->
                 <HBox alignment="CENTER_LEFT" spacing="15">
                     <Label styleClass="settings-label" text="Yazı Boyutu:" />
                     <Slider fx:id="fontSizeSlider" blockIncrement="1.0" majorTickUnit="2.0" max="18.0" min="12.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="14.0" />
                     <Label fx:id="fontSizeLabel" text="14 px" />
                 </HBox>
                 
-                <!-- Language Setting -->
                 <HBox alignment="CENTER_LEFT" spacing="15">
                     <Label styleClass="settings-label" text="Dil:" />
                     <ComboBox fx:id="languageSelector" prefWidth="150.0" promptText="Dil Seçin">
@@ -86,14 +78,12 @@
                 
                 <Separator styleClass="section-separator" />
                 
-                <!-- Notification Settings Section -->
                 <Label styleClass="settings-section-title" text="Bildirimler">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
                 
-                <!-- Notification Toggles -->
                 <VBox spacing="10">
                     <CheckBox fx:id="enableNotificationsCheckbox" mnemonicParsing="false" selected="true" text="Bildirimleri Etkinleştir" />
                     <CheckBox fx:id="favoriteNotificationsCheckbox" mnemonicParsing="false" selected="true" text="Favori Yemekler İçin Bildirim Al" />
@@ -101,7 +91,6 @@
                 
                 <Region VBox.vgrow="ALWAYS" />
                 
-                <!-- Action Buttons -->
                 <HBox alignment="CENTER_RIGHT" spacing="15">
                     <Button fx:id="restoreDefaultsButton" onAction="#restoreDefaults" styleClass="secondary-button" text="Varsayılanlara Dön" />
                     <Button fx:id="saveSettingsButton" onAction="#saveSettings" styleClass="primary-button" text="Kaydet" />

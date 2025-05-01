@@ -225,27 +225,83 @@ public class SettingsController {
         String primaryColorHex = toHexString(primaryColor);
         String secondaryColorHex = toHexString(secondaryColor);
         
-        // Create a style string for the inline CSS
-        String style = String.format(
-            ".button, .primary-button { -fx-background-color: %s; } " +
-            ".button:hover, .primary-button:hover { -fx-background-color: %s; } " +
-            ".dark-mode .primary-button { -fx-background-color: %s; } " +
-            ".dark-mode .primary-button:hover { -fx-background-color: %s; } " +
-            ".nutrition-chart .chart-bar { -fx-bar-fill: %s; } " +
-            ".nutrition-chart .chart-bar:hover { -fx-bar-fill: %s; } " +
-            ".dark-mode .combo-box .combo-box-popup .list-view .list-cell:hover, " +
-            ".dark-mode .combo-box .combo-box-popup .list-view .list-cell:selected { -fx-background-color: %s; }",
-            primaryColorHex, secondaryColorHex, 
-            primaryColorHex, secondaryColorHex,
-            primaryColorHex, secondaryColorHex,
-            primaryColorHex
+        // Create a more comprehensive dynamic stylesheet with higher specificity
+        String dynamicStyles = String.format(
+            /* Buttons */
+            "*.button, *.primary-button { -fx-background-color: %s !important; } " +
+            "*.button:hover, *.primary-button:hover { -fx-background-color: %s !important; } " +
+            
+            /* Dark mode buttons */
+            "*.dark-mode *.button, *.dark-mode *.primary-button { -fx-background-color: %s !important; } " +
+            "*.dark-mode *.button:hover, *.dark-mode *.primary-button:hover { -fx-background-color: %s !important; } " +
+            
+            /* Charts */
+            ".chart-bar, .nutrition-chart .chart-bar { -fx-bar-fill: %s !important; } " +
+            ".chart-bar:hover, .nutrition-chart .chart-bar:hover { -fx-bar-fill: %s !important; } " +
+            
+            /* Selection elements */
+            ".check-box:selected .box { -fx-background-color: %s !important; } " +
+            ".dark-mode .check-box:selected .box { -fx-background-color: %s !important; } " +
+            
+            /* ComboBox elements */
+            ".combo-box .list-cell:selected, .combo-box .list-view .list-cell:selected { -fx-background-color: %s !important; } " +
+            ".combo-box:showing, .combo-box:focused { -fx-border-color: %s !important; } " +
+            ".combo-box .list-view .list-cell:hover { -fx-background-color: %s !important; } " +
+            
+            /* DatePicker elements */
+            ".date-picker .selected { -fx-background-color: %s !important; } " +
+            ".date-picker .day-cell:hover { -fx-background-color: %s !important; } " +
+            
+            /* Dark mode selection elements */
+            ".dark-mode .combo-box .list-cell:selected, .dark-mode .combo-box .list-view .list-cell:selected { -fx-background-color: %s !important; } " +
+            ".dark-mode .combo-box .list-view .list-cell:hover { -fx-background-color: %s !important; } " +
+            
+            /* Nav items */
+            ".nav-item:selected, .nav-item.selected { -fx-background-color: %s !important; } " +
+            ".dark-mode .nav-item:selected, .dark-mode .nav-item.selected { -fx-background-color: %s !important; }",
+            
+            primaryColorHex, secondaryColorHex,  // Buttons
+            primaryColorHex, secondaryColorHex,  // Dark mode buttons
+            primaryColorHex, secondaryColorHex,  // Charts
+            primaryColorHex, primaryColorHex,    // Checkboxes
+            primaryColorHex, primaryColorHex, secondaryColorHex,  // ComboBox
+            primaryColorHex, secondaryColorHex,  // DatePicker
+            primaryColorHex, secondaryColorHex,  // Dark mode ComboBox
+            primaryColorHex, primaryColorHex     // Nav items
         );
         
-        // Apply the inline style to the root pane
-        rootPane.setStyle(style);
-        
-        System.out.println("Applied color scheme: primary=" + primaryColorHex + 
+        // Get the current scene
+        if (rootPane.getScene() != null) {
+            // Apply to Scene and Stage
+            rootPane.getScene().getStylesheets().removeIf(stylesheet -> 
+                stylesheet.startsWith("data:text/css"));
+                
+            // Add the dynamic stylesheet with encoded characters
+            String encodedCSS = dynamicStyles.replaceAll("#", "%23");
+            rootPane.getScene().getStylesheets().add("data:text/css," + encodedCSS);
+            
+            // Also apply a limited set of styles directly to root for immediate effect
+            String limitedStyles = String.format(
+                "-fx-base: %s; -fx-accent: %s; -fx-default-button: %s;",
+                primaryColorHex, primaryColorHex, primaryColorHex
+            );
+            rootPane.setStyle(limitedStyles);
+            
+            System.out.println("Applied comprehensive color scheme: primary=" + primaryColorHex + 
                            ", secondary=" + secondaryColorHex);
+                           
+            // Request a layout pass to ensure changes are visible
+            rootPane.requestLayout();
+        } else {
+            // Fallback to inline style if scene isn't available
+            rootPane.setStyle(dynamicStyles);
+            System.out.println("Applied inline color scheme (fallback): primary=" + primaryColorHex + 
+                           ", secondary=" + secondaryColorHex);
+        }
+        
+        // Store colors in settings
+        settings.setProperty("primaryColor", primaryColorHex);
+        settings.setProperty("secondaryColor", secondaryColorHex);
     }
     
     private void applyFontSize(double fontSize) {
@@ -259,26 +315,45 @@ public class SettingsController {
             return;
         }
         
-        // Create CSS rules for different text elements
+        // Create CSS rules for different text elements with specific selectors and !important
         String fontSizeCSS = String.format(
-            ".nav-label { -fx-font-size: %.1fpx; } " +
-            ".meal-label { -fx-font-size: %.1fpx; } " +
-            ".settings-label { -fx-font-size: %.1fpx; } " +
-            ".check-box { -fx-font-size: %.1fpx; }",
-            fontSize, fontSize, fontSize, fontSize
+            ".nav-label { -fx-font-size: %.1fpx !important; } " +
+            ".meal-label { -fx-font-size: %.1fpx !important; } " +
+            ".settings-label { -fx-font-size: %.1fpx !important; } " +
+            ".check-box { -fx-font-size: %.1fpx !important; } " +
+            ".button, .primary-button { -fx-font-size: %.1fpx !important; } " +
+            ".combo-box, .date-picker { -fx-font-size: %.1fpx !important; }",
+            fontSize, fontSize, fontSize, fontSize, fontSize, fontSize
         );
         
-        // Get the current style and append font size CSS
-        String currentStyle = rootPane.getStyle();
-        
-        // If there's already a style, append to it
-        if (currentStyle != null && !currentStyle.isEmpty()) {
-            rootPane.setStyle(currentStyle + " " + fontSizeCSS);
+        // Apply using the stylesheet mechanism
+        if (rootPane.getScene() != null) {
+            // Remove any previous font size styles
+            rootPane.getScene().getStylesheets().removeIf(stylesheet -> 
+                stylesheet.startsWith("data:text/css,fontsize"));
+                
+            // Add as a dynamic stylesheet with a prefix to identify it
+            rootPane.getScene().getStylesheets().add("data:text/css,fontsize=" + fontSizeCSS);
+            
+            System.out.println("Applied font size stylesheet: " + fontSize);
         } else {
-            rootPane.setStyle(fontSizeCSS);
+            // Fallback to inline style
+            String currentStyle = rootPane.getStyle();
+            
+            // Extract any existing font styles to avoid conflicts
+            if (currentStyle != null && !currentStyle.isEmpty()) {
+                // Remove existing font-size properties if any
+                currentStyle = currentStyle.replaceAll("-fx-font-size:\\s*[\\d.]+px\\s*;", "");
+                rootPane.setStyle(currentStyle + " " + fontSizeCSS);
+            } else {
+                rootPane.setStyle(fontSizeCSS);
+            }
+            
+            System.out.println("Applied font size inline style: " + fontSize);
         }
         
-        System.out.println("Applied font size: " + fontSize);
+        // Store the font size in settings
+        settings.setProperty("fontSize", String.valueOf(fontSize));
     }
     
     private void updateFontSizeLabel(double fontSize) {

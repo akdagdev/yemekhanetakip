@@ -29,7 +29,6 @@
                 <padding>
                     <Insets bottom="10" left="10" right="10" top="10" />
                 </padding>
-                <!-- Favorite meal items will be added here dynamically -->
                 <Label fx:id="noFavoritesLabel" styleClass="no-data-message" text="Henüz favori yemeğiniz bulunmamaktadır. Ana sayfada yemeklerin yanındaki yıldız işaretini kullanarak favorilerinize ekleyebilirsiniz." wrapText="true" />
             </VBox>
         </ScrollPane>

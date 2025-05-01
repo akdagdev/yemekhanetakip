@@ -7,7 +7,6 @@
 
 <AnchorPane fx:id="profilePane" prefHeight="520.0" prefWidth="570.0" styleClass="profile-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.ProfileController">
     <TabPane fx:id="authTabPane" prefHeight="520.0" prefWidth="570.0" styleClass="auth-tabs" tabClosingPolicy="UNAVAILABLE">
-        <!-- Login Tab -->
         <Tab text="Giriş Yap">
             <VBox alignment="CENTER" prefHeight="480.0" prefWidth="570.0" spacing="20">
                 <padding>
@@ -45,7 +44,6 @@
             </VBox>
         </Tab>
         
-        <!-- Register Tab -->
         <Tab text="Kayıt Ol">
             <VBox alignment="CENTER" prefHeight="480.0" prefWidth="570.0" spacing="20">
                 <padding>
