@@ -1,6 +1,8 @@
 package yemekhanetakip;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -8,9 +10,12 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Alert;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -53,17 +58,29 @@ public class ProTestController {
     private CheckBox meal5CheckBox;
     
     @FXML
-    private ToggleButton themeToggle;
+    private AnchorPane rootPane;
     
     @FXML
-    private AnchorPane rootPane;
+    private AnchorPane contentPane;
     
     private boolean isDarkMode = false;
     
     private Scraper scraper;
     
+    // Current logged in user
+    private User currentUser = null;
+    
+    // Original menu and nutrition chart containers
+    private VBox menuPanel;
+    private VBox nutritionChart;
+    
+    private DatabaseManager dbManager;
+    
     @FXML
     public void initialize() {
+        // Initialize the database manager
+        dbManager = new DatabaseManager();
+        
         // Initialize the scraper
         scraper = new Scraper("https://mediko.gazi.edu.tr/view/page/20412");
         
@@ -80,34 +97,201 @@ public class ProTestController {
         // Set initial date to today
         datePicker.setValue(LocalDate.now());
         
-        // Initialize theme toggle button with modern styling
-        themeToggle.getStyleClass().add("theme-toggle");
-        themeToggle.setSelected(false);
-        updateThemeToggleIcon();
+        // Store references to original content
+        storeOriginalContent();
+        
+        // Set up checkbox listeners for favorites
+        setupFavoriteCheckboxes();
+    }
+    
+    /**
+     * Stores references to the original content components for later restoration
+     */
+    private void storeOriginalContent() {
+        try {
+            if (contentPane != null && contentPane.getChildren().size() >= 2) {
+                for (int i = 0; i < contentPane.getChildren().size(); i++) {
+                    if (contentPane.getChildren().get(i) instanceof VBox) {
+                        if (menuPanel == null) {
+                            menuPanel = (VBox) contentPane.getChildren().get(i);
+                        } else if (nutritionChart == null) {
+                            nutritionChart = (VBox) contentPane.getChildren().get(i);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error storing original content: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Safely finds the content container regardless of FXML structure changes
+     */
+    private HBox findContentContainer() {
+        // Look for HBox in rootPane children that is likely the content container
+        for (int i = 0; i < rootPane.getChildren().size(); i++) {
+            if (rootPane.getChildren().get(i) instanceof HBox) {
+                return (HBox) rootPane.getChildren().get(i);
+            }
+        }
+        
+        // Fallback to the known index if available
+        if (rootPane.getChildren().size() > 2 && 
+            rootPane.getChildren().get(2) instanceof HBox) {
+            return (HBox) rootPane.getChildren().get(2);
+        }
+        
+        return null;
     }
     
     @FXML
-    public void toggleTheme() {
-        isDarkMode = themeToggle.isSelected();
-        
-        if (isDarkMode) {
-            // Switch to dark mode
-            rootPane.getStyleClass().add("dark-mode");
-        } else {
-            // Switch to light mode
-            rootPane.getStyleClass().remove("dark-mode");
+    public void goToHome() {
+        try {
+            // If we have the contentPane defined in FXML
+            if (contentPane != null) {
+                // First clear the content
+                contentPane.getChildren().clear();
+                
+                // If we have stored the original panels
+                if (menuPanel != null && nutritionChart != null) {
+                    // Add them back
+                    contentPane.getChildren().addAll(menuPanel, nutritionChart);
+                } else {
+                    // Otherwise reload the default content
+                    loadDefaultContent(contentPane);
+                }
+            } else {
+                // Find the content container safely
+                HBox contentContainer = findContentContainer();
+                if (contentContainer == null) {
+                    System.err.println("Could not find content container");
+                    return;
+                }
+                
+                // Clear except for navigation (assuming first child is navigation)
+                if (contentContainer.getChildren().size() > 1) {
+                    contentContainer.getChildren().remove(1, contentContainer.getChildren().size());
+                }
+                
+                // Load default content into the container
+                loadDefaultContentIntoContainer(contentContainer);
+            }
+            
+            // Update the chart and menu date after restoring
+            if (datePicker != null && datePicker.getValue() != null) {
+                updateMenuForDate(datePicker.getValue());
+            }
+            
+            // Apply current theme
+            applyTheme();
+            
+        } catch (IOException e) {
+            System.err.println("Error loading home view: " + e.getMessage());
+            e.printStackTrace();
         }
-        
-        updateThemeToggleIcon();
     }
     
-    private void updateThemeToggleIcon() {
+    /**
+     * Loads default content into the provided content pane
+     */
+    private void loadDefaultContent(AnchorPane targetPane) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ProTest.fxml"));
+        Parent mainView = loader.load();
+        
+        // Try to find content container
+        for (int i = 0; i < ((AnchorPane) mainView).getChildren().size(); i++) {
+            if (((AnchorPane) mainView).getChildren().get(i) instanceof HBox) {
+                HBox contentContainer = (HBox) ((AnchorPane) mainView).getChildren().get(i);
+                
+                // Look for the content pane within the HBox
+                for (int j = 0; j < contentContainer.getChildren().size(); j++) {
+                    if (contentContainer.getChildren().get(j) instanceof AnchorPane) {
+                        AnchorPane newContentPane = (AnchorPane) contentContainer.getChildren().get(j);
+                        
+                        // Store original content for future reference
+                        for (int k = 0; k < newContentPane.getChildren().size(); k++) {
+                            if (newContentPane.getChildren().get(k) instanceof VBox) {
+                                if (menuPanel == null) {
+                                    menuPanel = (VBox) newContentPane.getChildren().get(k);
+                                } else if (nutritionChart == null) {
+                                    nutritionChart = (VBox) newContentPane.getChildren().get(k);
+                                }
+                            }
+                        }
+                        
+                        // Add all content
+                        targetPane.getChildren().addAll(newContentPane.getChildren());
+                        return;
+                    }
+                }
+            }
+        }
+        
+        // Fallback to old method if structure is as expected
+        HBox contentContainer = (HBox) ((AnchorPane) mainView).getChildren().get(2);
+        AnchorPane newContentPane = (AnchorPane) contentContainer.getChildren().get(1);
+        targetPane.getChildren().addAll(newContentPane.getChildren());
+    }
+    
+    /**
+     * Loads default content into the provided container
+     */
+    private void loadDefaultContentIntoContainer(HBox contentContainer) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ProTest.fxml"));
+        Parent mainView = loader.load();
+        
+        // Try to find the content pane
+        AnchorPane originalContentPane = null;
+        
+        // Look for the HBox content container in the loaded view
+        for (int i = 0; i < ((AnchorPane) mainView).getChildren().size(); i++) {
+            if (((AnchorPane) mainView).getChildren().get(i) instanceof HBox) {
+                HBox originalContentContainer = (HBox) ((AnchorPane) mainView).getChildren().get(i);
+                
+                // Find the content pane within the HBox
+                for (int j = 0; j < originalContentContainer.getChildren().size(); j++) {
+                    if (originalContentContainer.getChildren().get(j) instanceof AnchorPane) {
+                        originalContentPane = (AnchorPane) originalContentContainer.getChildren().get(j);
+                        break;
+                    }
+                }
+                
+                if (originalContentPane != null) break;
+            }
+        }
+        
+        // Fallback to old method if structure is as expected
+        if (originalContentPane == null) {
+            HBox originalContentContainer = (HBox) ((AnchorPane) mainView).getChildren().get(2);
+            originalContentPane = (AnchorPane) originalContentContainer.getChildren().get(1);
+        }
+        
+        // Add the original content
+        contentContainer.getChildren().add(originalContentPane);
+    }
+    
+    // Add a setter for dark mode that can be called from the SettingsController
+    public void setDarkMode(boolean darkMode) {
+        if (isDarkMode != darkMode) {
+            isDarkMode = darkMode;
+            applyTheme();
+            System.out.println("Theme changed to: " + (isDarkMode ? "Dark" : "Light"));
+        }
+    }
+    
+    // Get current theme state
+    public boolean isDarkMode() {
+        return isDarkMode;
+    }
+    
+    private void applyTheme() {
         if (isDarkMode) {
-            // Sun icon for dark mode
-            themeToggle.setText("\u2600"); // Sun emoji
+            if (!rootPane.getStyleClass().contains("dark-mode")) {
+                rootPane.getStyleClass().add("dark-mode");
+            }
         } else {
-            // Moon icon for light mode
-            themeToggle.setText("\uD83C\uDF19"); // Moon emoji
+            rootPane.getStyleClass().remove("dark-mode");
         }
     }
     
@@ -122,6 +306,11 @@ public class ProTestController {
         calorieAxis.setLowerBound(0);
         calorieAxis.setUpperBound(1500); // Adjusted upper bound for total daily calories
         calorieAxis.setTickUnit(250);    // Larger tick unit for better readability
+    }
+    
+    // Method to set the current user after login
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
     }
     
     private void updateMenuForDate(LocalDate date) {
@@ -225,5 +414,197 @@ public class ProTestController {
         
         // Force chart update
         calorieChart.layout();
+    }
+    
+    private void setupFavoriteCheckboxes() {
+        meal1CheckBox.setOnAction(e -> handleFavoriteToggle(meal1CheckBox, meal1Label.getText()));
+        meal2CheckBox.setOnAction(e -> handleFavoriteToggle(meal2CheckBox, meal2Label.getText()));
+        meal3CheckBox.setOnAction(e -> handleFavoriteToggle(meal3CheckBox, meal3Label.getText()));
+        meal4CheckBox.setOnAction(e -> handleFavoriteToggle(meal4CheckBox, meal4Label.getText()));
+        meal5CheckBox.setOnAction(e -> handleFavoriteToggle(meal5CheckBox, meal5Label.getText()));
+    }
+    
+    private void handleFavoriteToggle(CheckBox checkBox, String mealName) {
+        if (currentUser == null) {
+            // User not logged in, show alert
+            showLoginRequiredAlert();
+            checkBox.setSelected(false);
+            return;
+        }
+        
+        if (checkBox.isSelected()) {
+            // Add to favorites
+            boolean success = dbManager.addToFavorites(currentUser.getId(), mealName);
+            if (!success) {
+                // Show error and revert checkbox state
+                showErrorAlert("Favorilere eklenemedi", "Yemek favorilere eklenirken bir hata oluştu.");
+                checkBox.setSelected(false);
+            }
+        } else {
+            // TODO: Remove from favorites - would need to get the favorite ID
+            // For now, just show a message
+            showInfoAlert("Favorilerden kaldırıldı", "Yemek favorilerinizden kaldırıldı.");
+        }
+    }
+    
+    private void showLoginRequiredAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Giriş Gerekli");
+        alert.setHeaderText("Lütfen giriş yapın");
+        alert.setContentText("Favori işlemleri için giriş yapmanız gerekmektedir.");
+        alert.showAndWait();
+    }
+    
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Hata");
+        alert.setHeaderText(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
+    private void showInfoAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Bilgi");
+        alert.setHeaderText(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
+    // Add a method to navigate to settings page
+    @FXML
+    public void openSettings() {
+        try {
+            // Load the Settings.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+            Parent settingsView = loader.load();
+            
+            // Get the controller
+            SettingsController settingsController = loader.getController();
+            
+            // Set this controller as the main controller
+            settingsController.setMainController(this);
+            System.out.println("Main controller passed to settings controller");
+            
+            // Replace content in the main content area
+            if (contentPane != null) {
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(settingsView);
+            } else {
+                // Find the content container safely
+                HBox contentContainer = findContentContainer();
+                if (contentContainer == null) {
+                    System.err.println("Could not find content container for settings view");
+                    return;
+                }
+                
+                // Clear the container except for the navigation
+                if (contentContainer.getChildren().size() > 1) {
+                    contentContainer.getChildren().remove(1, contentContainer.getChildren().size());
+                }
+                
+                // Add the settings view
+                contentContainer.getChildren().add(settingsView);
+            }
+            
+            // Apply current theme
+            applyTheme();
+        } catch (IOException e) {
+            System.err.println("Error loading settings view: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    // Getter for rootPane to allow other controllers to access it
+    public AnchorPane getRootPane() {
+        return rootPane;
+    }
+    
+    @FXML
+    public void openProfile() {
+        try {
+            // Load the Profile.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Profile.fxml"));
+            Parent profileView = loader.load();
+            
+            // Get the controller
+            ProfileController profileController = loader.getController();
+            
+            // Set the currentUser if already logged in
+            if (currentUser != null) {
+                // TODO: Handle logged in state in profile view
+            }
+            
+            // Replace content in the main content area
+            if (contentPane != null) {
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(profileView);
+            } else {
+                // Find the content container safely
+                HBox contentContainer = findContentContainer();
+                if (contentContainer == null) {
+                    System.err.println("Could not find content container for profile view");
+                    return;
+                }
+                
+                // Clear the container except for the navigation
+                if (contentContainer.getChildren().size() > 1) {
+                    contentContainer.getChildren().remove(1, contentContainer.getChildren().size());
+                }
+                
+                // Add the profile view
+                contentContainer.getChildren().add(profileView);
+            }
+            
+            // Apply current theme
+            applyTheme();
+        } catch (IOException e) {
+            System.err.println("Error loading profile view: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    public void openFavorites() {
+        try {
+            // Load the Favorites.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Favorites.fxml"));
+            Parent favoritesView = loader.load();
+            
+            // Get the controller
+            FavoritesController favoritesController = loader.getController();
+            
+            // Set the currentUser if already logged in
+            if (currentUser != null) {
+                favoritesController.setUser(currentUser);
+            }
+            
+            // Replace content in the main content area
+            if (contentPane != null) {
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(favoritesView);
+            } else {
+                // Find the content container safely
+                HBox contentContainer = findContentContainer();
+                if (contentContainer == null) {
+                    System.err.println("Could not find content container for favorites view");
+                    return;
+                }
+                
+                // Clear the container except for the navigation
+                if (contentContainer.getChildren().size() > 1) {
+                    contentContainer.getChildren().remove(1, contentContainer.getChildren().size());
+                }
+                
+                // Add the favorites view
+                contentContainer.getChildren().add(favoritesView);
+            }
+            
+            // Apply current theme
+            applyTheme();
+        } catch (IOException e) {
+            System.err.println("Error loading favorites view: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 } 

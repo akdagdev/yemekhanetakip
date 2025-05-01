@@ -424,4 +424,420 @@
 .dark-mode .theme-toggle:selected {
     -fx-background-color: #4dabf7;
     -fx-border-color: #228be6;
+}
+
+/* Profile and Authentication Styles */
+.profile-container {
+    -fx-background-color: transparent;
+}
+
+.auth-tabs {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 2);
+}
+
+.auth-tabs .tab-header-area {
+    -fx-padding: 10px 5px 0px 5px;
+}
+
+.auth-tabs .tab {
+    -fx-background-color: #f1f3f5;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-border-radius: 8px 8px 0 0;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.auth-tabs .tab:selected {
+    -fx-background-color: #4dabf7;
+}
+
+.auth-tabs .tab-label {
+    -fx-text-fill: #495057;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.auth-tabs .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.auth-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #343a40;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.form-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #495057;
+    -fx-font-weight: normal;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.message-label {
+    -fx-font-size: 14px;
+    -fx-padding: 10px 0;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-min-height: 40px;
+}
+
+.auth-button {
+    -fx-background-color: #4dabf7;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.2s;
+}
+
+.auth-button:hover {
+    -fx-background-color: #228be6;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+/* Dark mode styles for profile and auth */
+.dark-mode .profile-container {
+    -fx-background-color: transparent;
+}
+
+.dark-mode .auth-tabs {
+    -fx-background-color: #343a40;
+}
+
+.dark-mode .auth-tabs .tab {
+    -fx-background-color: #212529;
+}
+
+.dark-mode .auth-tabs .tab:selected {
+    -fx-background-color: #228be6;
+}
+
+.dark-mode .auth-tabs .tab-label {
+    -fx-text-fill: #adb5bd;
+}
+
+.dark-mode .auth-tabs .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.dark-mode .auth-title {
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .form-label {
+    -fx-text-fill: #ced4da;
+}
+
+.dark-mode .auth-button {
+    -fx-background-color: #228be6;
+}
+
+.dark-mode .auth-button:hover {
+    -fx-background-color: #1971c2;
+}
+
+/* Settings Page Styles */
+.settings-container {
+    -fx-background-color: #f8f9fa;
+}
+
+.settings-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+}
+
+.settings-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.settings-scroll-pane > .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 1;
+}
+
+.settings-scroll-pane > .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-padding: 1 0 0 0;
+}
+
+.settings-scroll-pane > .scroll-bar > .thumb {
+    -fx-background-color: #ced4da;
+    -fx-background-radius: 10px;
+}
+
+.settings-scroll-pane > .scroll-bar > .thumb:hover {
+    -fx-background-color: #adb5bd;
+}
+
+.settings-panel {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 2);
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+}
+
+.settings-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #343a40;
+}
+
+.settings-section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #343a40;
+    -fx-padding: 10px 0 5px 0;
+}
+
+.settings-label {
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #495057;
+    -fx-min-width: 100px;
+}
+
+/* Add specific styles for combo boxes in light mode */
+.settings-panel .combo-box {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #212529;
+    -fx-prompt-text-fill: #6c757d;
+}
+
+.settings-panel .combo-box .list-cell {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #212529;
+}
+
+.settings-panel .combo-box:focused {
+    -fx-border-color: #4dabf7;
+}
+
+/* Add specific styles for ColorPicker in light mode */
+.settings-panel .color-picker {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.settings-panel .color-picker .color-picker-label {
+    -fx-text-fill: #212529;
+}
+
+/* Add specific styles for sliders in light mode */
+.settings-panel .slider .track {
+    -fx-background-color: #dee2e6;
+}
+
+.settings-panel .slider .thumb {
+    -fx-background-color: #4dabf7;
+}
+
+.settings-panel .slider .axis {
+    -fx-tick-label-fill: #212529;
+}
+
+/* Add specific styles for checkboxes in light mode */
+.settings-panel .check-box {
+    -fx-text-fill: #212529;
+}
+
+.settings-panel .check-box .box {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #adb5bd;
+}
+
+.settings-panel .check-box:selected .box {
+    -fx-background-color: #4dabf7;
+}
+
+.primary-button {
+    -fx-background-color: #4dabf7;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.2s;
+}
+
+.primary-button:hover {
+    -fx-background-color: #228be6;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+.secondary-button {
+    -fx-background-color: #e9ecef;
+    -fx-text-fill: #495057;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.2s;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #dee2e6;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+/* Dark Mode styles for Settings */
+.dark-mode .settings-container {
+    -fx-background-color: #212529;
+}
+
+.dark-mode .settings-scroll-pane > .scroll-bar > .thumb {
+    -fx-background-color: #495057;
+}
+
+.dark-mode .settings-scroll-pane > .scroll-bar > .thumb:hover {
+    -fx-background-color: #6c757d;
+}
+
+.dark-mode .settings-panel {
+    -fx-background-color: #343a40;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 2);
+}
+
+.dark-mode .settings-title {
+    -fx-text-fill: #f8f9fa;
+}
+
+.dark-mode .settings-section-title {
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .settings-label {
+    -fx-text-fill: #ced4da;
+}
+
+/* Dark mode styles for ComboBox in settings */
+.dark-mode .combo-box {
+    -fx-background-color: #495057;
+    -fx-text-fill: #ced4da;
+    -fx-prompt-text-fill: #adb5bd;
+}
+
+.dark-mode .combo-box .list-cell {
+    -fx-background-color: #495057;
+    -fx-text-fill: #ced4da;
+}
+
+.dark-mode .combo-box .combo-box-popup .list-view {
+    -fx-background-color: #343a40;
+    -fx-border-color: #495057;
+}
+
+.dark-mode .combo-box .combo-box-popup .list-view .list-cell {
+    -fx-background-color: #343a40;
+    -fx-text-fill: #ced4da;
+}
+
+.dark-mode .combo-box .combo-box-popup .list-view .list-cell:hover,
+.dark-mode .combo-box .combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: #4dabf7;
+    -fx-text-fill: white;
+}
+
+.dark-mode .combo-box .arrow-button {
+    -fx-background-color: #495057;
+}
+
+.dark-mode .combo-box:focused {
+    -fx-border-color: #4dabf7;
+}
+
+/* Dark mode styles for ColorPicker in settings */
+.dark-mode .color-picker {
+    -fx-background-color: #495057;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.dark-mode .color-picker .arrow-button {
+    -fx-background-color: #495057;
+}
+
+.dark-mode .color-picker .color-picker-label {
+    -fx-text-fill: #ced4da;
+}
+
+.dark-mode .color-picker .color-rect {
+    -fx-stroke: #ced4da;
+}
+
+.dark-mode .color-picker-panel {
+    -fx-background-color: #343a40;
+    -fx-border-color: #495057;
+}
+
+.dark-mode .color-picker-panel .label {
+    -fx-text-fill: #ced4da;
+}
+
+/* Dark mode styles for Slider in settings */
+.dark-mode .slider .track {
+    -fx-background-color: #495057;
+}
+
+.dark-mode .slider .thumb {
+    -fx-background-color: #4dabf7;
+}
+
+.dark-mode .slider .axis {
+    -fx-tick-label-fill: #ced4da;
+}
+
+.dark-mode .slider .axis .axis-tick-mark {
+    -fx-stroke: #6c757d;
+}
+
+.dark-mode .slider .axis .axis-minor-tick-mark {
+    -fx-stroke: #6c757d;
+}
+
+/* Dark mode styles for CheckBox in settings */
+.dark-mode .check-box {
+    -fx-text-fill: #ced4da;
+}
+
+.dark-mode .check-box .box {
+    -fx-background-color: #495057;
+    -fx-border-color: #6c757d;
+}
+
+.dark-mode .check-box:selected .box {
+    -fx-background-color: #4dabf7;
+}
+
+.dark-mode .check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.dark-mode .primary-button {
+    -fx-background-color: #339af0;
+}
+
+.dark-mode .primary-button:hover {
+    -fx-background-color: #1c7ed6;
+}
+
+.dark-mode .secondary-button {
+    -fx-background-color: #495057;
+    -fx-text-fill: #e9ecef;
+}
+
+.dark-mode .secondary-button:hover {
+    -fx-background-color: #6c757d;
 } 

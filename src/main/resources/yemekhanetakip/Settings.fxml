@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+
+<AnchorPane fx:id="settingsPane" prefHeight="500.0" prefWidth="570.0" styleClass="settings-container" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.SettingsController">
+    <ScrollPane fitToWidth="true" fitToHeight="false" prefHeight="500.0" prefWidth="570.0" styleClass="settings-scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox prefHeight="500.0" prefWidth="570.0" spacing="20" styleClass="settings-panel">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+            <children>
+                <Label styleClass="settings-title" text="Ayarlar">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                
+                <Separator styleClass="section-separator" />
+                
+                <Label styleClass="settings-section-title" text="Görünüm">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Label styleClass="settings-label" text="Tema:" />
+                    <ComboBox fx:id="themeSelector" prefWidth="150.0" promptText="Tema Seçin">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Açık" />
+                                <String fx:value="Koyu" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </HBox>
+                
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Label styleClass="settings-label" text="Ana Renk:" />
+                    <ColorPicker fx:id="primaryColorPicker" prefWidth="150.0" />
+                </HBox>
+                
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Label styleClass="settings-label" text="İkincil Renk:" />
+                    <ColorPicker fx:id="secondaryColorPicker" prefWidth="150.0" />
+                </HBox>
+                
+                <Separator styleClass="section-separator" />
+                
+                <Label styleClass="settings-section-title" text="Genel Ayarlar">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Label styleClass="settings-label" text="Yazı Boyutu:" />
+                    <Slider fx:id="fontSizeSlider" blockIncrement="1.0" majorTickUnit="2.0" max="18.0" min="12.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="14.0" />
+                    <Label fx:id="fontSizeLabel" text="14 px" />
+                </HBox>
+                
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Label styleClass="settings-label" text="Dil:" />
+                    <ComboBox fx:id="languageSelector" prefWidth="150.0" promptText="Dil Seçin">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Türkçe" />
+                                <String fx:value="English" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </HBox>
+                
+                <Separator styleClass="section-separator" />
+                
+                <Label styleClass="settings-section-title" text="Bildirimler">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                
+                <VBox spacing="10">
+                    <CheckBox fx:id="enableNotificationsCheckbox" mnemonicParsing="false" selected="true" text="Bildirimleri Etkinleştir" />
+                    <CheckBox fx:id="favoriteNotificationsCheckbox" mnemonicParsing="false" selected="true" text="Favori Yemekler İçin Bildirim Al" />
+                </VBox>
+                
+                <Region VBox.vgrow="ALWAYS" />
+                
+                <HBox alignment="CENTER_RIGHT" spacing="15">
+                    <Button fx:id="restoreDefaultsButton" onAction="#restoreDefaults" styleClass="secondary-button" text="Varsayılanlara Dön" />
+                    <Button fx:id="saveSettingsButton" onAction="#saveSettings" styleClass="primary-button" text="Kaydet" />
+                </HBox>
+            </children>
+        </VBox>
+    </ScrollPane>
+</AnchorPane> 
