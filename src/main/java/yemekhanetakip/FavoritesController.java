@@ -33,7 +33,7 @@ public class FavoritesController {
     // Database connection properties (same as in DatabaseManager)
     private static final String DB_URL = "jdbc:mysql://localhost:3306/yemekhanetakip";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
+    private static final String DB_PASSWORD = "rv9yl2qc";
     
     public void initialize() {
         dbManager = new DatabaseManager();
@@ -133,7 +133,7 @@ public class FavoritesController {
     private void removeFavorite(int favoriteId) {
         try {
             Connection conn = getConnection();
-            String query = "DELETE FROM favorites WHERE id = ?";
+            String query = "DELETE FROM favorites WHERE meal_id = ?";
             
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, favoriteId);

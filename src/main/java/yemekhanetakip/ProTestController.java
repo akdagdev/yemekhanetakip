@@ -434,7 +434,8 @@ public class ProTestController {
         
         if (checkBox.isSelected()) {
             // Add to favorites
-            boolean success = dbManager.addToFavorites(currentUser.getId(), mealName);
+            int mealId = dbManager.getOrCreateMeal(mealName);
+            boolean success = dbManager.addToFavorites(currentUser.getId(), mealId);
             if (!success) {
                 // Show error and revert checkbox state
                 showErrorAlert("Favorilere eklenemedi", "Yemek favorilere eklenirken bir hata oluştu.");

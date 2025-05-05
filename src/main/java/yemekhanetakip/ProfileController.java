@@ -59,47 +59,55 @@ public class ProfileController {
         
         // Attempt to authenticate the user
         User user = dbManager.authenticateUser(username, password);
-        if (user != null) {
+
+        if (user != null)
+        {
             loginMessageLabel.setTextFill(Color.GREEN);
             loginMessageLabel.setText("Giriş başarılı! Hoş geldiniz, " + user.getFullName());
             
             // TODO: Update UI to show user is logged in
             // TODO: Store user information in session
-        } else {
+        }
+        else
+        {
             loginMessageLabel.setTextFill(Color.RED);
             loginMessageLabel.setText("Geçersiz kullanıcı adı veya şifre!");
         }
     }
     
     @FXML
-    public void handleRegistration() {
+    public void handleRegistration()
+    {
         String fullName = registerFullName.getText();
         String email = registerEmail.getText();
         String username = registerUsername.getText();
         String password = registerPassword.getText();
         
         // Validate input
-        if (fullName.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
+        if (fullName.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty())
+        {
             registerMessageLabel.setTextFill(Color.RED);
             registerMessageLabel.setText("Lütfen tüm alanları doldurun!");
             return;
         }
         
         // Basic email validation
-        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
+        {
             registerMessageLabel.setTextFill(Color.RED);
             registerMessageLabel.setText("Geçerli bir e-posta adresi girin!");
             return;
         }
         
         // Password length validation
-        if (password.length() < 6) {
+        if (password.length() < 6)
+        {
             registerMessageLabel.setTextFill(Color.RED);
             registerMessageLabel.setText("Şifreniz en az 6 karakter uzunluğunda olmalıdır!");
             return;
         }
         
-        // Check if username already exists
+        // Check if user name already exists
         if (dbManager.usernameExists(username)) {
             registerMessageLabel.setTextFill(Color.RED);
             registerMessageLabel.setText("Bu kullanıcı adı zaten kullanılıyor!");
@@ -110,7 +118,7 @@ public class ProfileController {
         User newUser = new User(0, fullName, email, username, password);
         
         // Attempt to register the user
-        boolean registrationSuccess = dbManager.registerUser(newUser);
+        boolean registrationSuccess = dbManager.registerUser(newUser,  password);
         if (registrationSuccess) {
             registerMessageLabel.setTextFill(Color.GREEN);
             registerMessageLabel.setText("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
@@ -121,7 +129,7 @@ public class ProfileController {
             registerUsername.clear();
             registerPassword.clear();
             
-            // Switch to login tab
+            // Switch to log in tab
             authTabPane.getSelectionModel().select(0);
         } else {
             registerMessageLabel.setTextFill(Color.RED);
