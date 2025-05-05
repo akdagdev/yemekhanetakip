@@ -428,7 +428,7 @@
 
 /* Profile and Authentication Styles */
 .profile-container {
-    -fx-background-color: transparent;
+    -fx-background-color: #f5f5f5;
 }
 
 .auth-tabs {
@@ -840,4 +840,155 @@
 
 .dark-mode .secondary-button:hover {
     -fx-background-color: #6c757d;
+}
+
+/* Main Container Styles */
+.profile-container {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Header Styles */
+.profile-header {
+    -fx-background-color: #3498db;
+    -fx-background-radius: 0 0 10 10;
+}
+
+.profile-title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.logout-button {
+    -fx-background-color: #2980b9;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-background-color: #246a99;
+}
+
+/* Sidebar Styles */
+.profile-sidebar {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 3);
+}
+
+.profile-name {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.profile-username {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.profile-menu-header {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #95a5a6;
+    -fx-padding: 5 0 0 0;
+}
+
+.profile-menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #34495e;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-border-radius: 5;
+}
+
+.profile-menu-button:hover {
+    -fx-background-color: #ecf0f1;
+}
+
+/* Content Panel Styles */
+.profile-content-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, 2);
+    -fx-padding: 20;
+}
+
+.content-header {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.profile-field-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #7f8c8d;
+}
+
+.profile-field-value {
+    -fx-text-fill: #34495e;
+}
+
+.settings-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* Button Styles */
+.edit-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.edit-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+/* Table Styles */
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Form Elements */
+.text-field, .password-field {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 8;
+}
+
+/* Delete Account Section */
+.warning-text {
+    -fx-text-fill: #e74c3c;
+    -fx-font-style: italic;
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b;
 } 

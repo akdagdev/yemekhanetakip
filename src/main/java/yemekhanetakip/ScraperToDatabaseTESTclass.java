@@ -34,8 +34,9 @@ public class ScraperToDatabaseTESTclass {
             }
         }
 
+        DatabaseManager dbManager = new DatabaseManager();
         for (String yemek : yemekSeti) {
-            DatabaseManager.insertMealIfNotExists(yemek);
+            dbManager.insertMealIfNotExists(yemek);
         }
 
         System.out.println("Scraper'dan gelen temizlenmiş yemekler veritabanına işlendi.");
