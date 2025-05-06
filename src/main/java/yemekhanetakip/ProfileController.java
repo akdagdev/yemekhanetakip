@@ -3,6 +3,8 @@ package yemekhanetakip;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import yemekhanetakip.db.DatabaseManager;
+import yemekhanetakip.db.UserDBManager;
 
 public class ProfileController {
     
@@ -33,12 +35,12 @@ public class ProfileController {
     @FXML
     private TabPane authTabPane;
     
-    private DatabaseManager dbManager;
+    private UserDBManager dbManager;
     
     @FXML
     public void initialize() {
         // Initialize the database manager
-        dbManager = new DatabaseManager();
+        dbManager = new UserDBManager();
         
         // Clear any previous message
         loginMessageLabel.setText("");

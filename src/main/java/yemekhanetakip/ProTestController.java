@@ -14,6 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert;
+import yemekhanetakip.db.DatabaseManager;
+import yemekhanetakip.db.FavoritesDBManager;
+import yemekhanetakip.db.MealDBManager;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -74,12 +77,14 @@ public class ProTestController {
     private VBox menuPanel;
     private VBox nutritionChart;
     
-    private DatabaseManager dbManager;
+    private MealDBManager mealDBManager;
+    private FavoritesDBManager favoritesDBManager;
     
     @FXML
     public void initialize() {
         // Initialize the database manager
-        dbManager = new DatabaseManager();
+        mealDBManager = new MealDBManager();
+        favoritesDBManager = new FavoritesDBManager();
         
         // Initialize the scraper
         scraper = new Scraper("https://mediko.gazi.edu.tr/view/page/20412");
@@ -434,8 +439,8 @@ public class ProTestController {
         
         if (checkBox.isSelected()) {
             // Add to favorites
-            int mealId = dbManager.getOrCreateMeal(mealName);
-            boolean success = dbManager.addToFavorites(currentUser.getId(), mealId);
+            int mealId = mealDBManager.getOrCreateMeal(mealName);
+            boolean success = favoritesDBManager.addToFavorites(currentUser.getId(), mealId);
             if (!success) {
                 // Show error and revert checkbox state
                 showErrorAlert("Favorilere eklenemedi", "Yemek favorilere eklenirken bir hata oluştu.");

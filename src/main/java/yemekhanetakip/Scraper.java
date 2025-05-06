@@ -81,6 +81,9 @@ public class Scraper {
                         current = table[i][j];
                         courses.put(stringToDate(current), new ArrayList<>());
                     } else {
+                        if (table[i][j].contains("* "))
+                            table[i][j] = table[i][j].replace("* ", "*");
+
                         courses.get(stringToDate(current)).add(table[i][j]);
                     }
                 }

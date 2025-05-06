@@ -8,4 +8,6 @@ module com.example.yemekhanetakip {
 
     opens yemekhanetakip to javafx.fxml;
     exports yemekhanetakip;
+    exports yemekhanetakip.db;
+    opens yemekhanetakip.db to javafx.fxml;
 }

@@ -1,5 +1,8 @@
 package yemekhanetakip;
 
+import yemekhanetakip.db.DatabaseManager;
+import yemekhanetakip.db.MealDBManager;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,7 +28,6 @@ public class ScraperToDatabaseTESTclass {
                     else if (yemek.contains("*"))
                     {
                          yemek = yemek.replace("*", "");
-
                     }
 
 
@@ -34,7 +36,7 @@ public class ScraperToDatabaseTESTclass {
             }
         }
 
-        DatabaseManager dbManager = new DatabaseManager();
+        MealDBManager dbManager = new MealDBManager();
         for (String yemek : yemekSeti) {
             dbManager.insertMealIfNotExists(yemek);
         }

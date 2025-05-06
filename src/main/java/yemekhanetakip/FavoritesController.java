@@ -8,6 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Priority;
+import yemekhanetakip.db.DatabaseManager;
+import yemekhanetakip.db.FavoritesDBManager;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +30,7 @@ public class FavoritesController {
     @FXML
     private ComboBox<String> sortComboBox;
     
-    private DatabaseManager dbManager;
+    private FavoritesDBManager dbManager;
     private User currentUser;
     
     // Database connection properties (same as in DatabaseManager)
@@ -36,7 +39,7 @@ public class FavoritesController {
     private static final String DB_PASSWORD = "rv9yl2qc";
     
     public void initialize() {
-        dbManager = new DatabaseManager();
+        dbManager = new FavoritesDBManager();
         
         // Setup sort options
         ObservableList<String> sortOptions = FXCollections.observableArrayList(
