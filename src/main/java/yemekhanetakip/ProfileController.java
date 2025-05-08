@@ -5,6 +5,13 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import yemekhanetakip.db.DatabaseManager;
 import yemekhanetakip.db.UserDBManager;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 public class ProfileController {
     
@@ -37,6 +44,9 @@ public class ProfileController {
     
     private UserDBManager dbManager;
     
+    private int loginClickCount = 0;
+    private MediaPlayer mysterySoundPlayer;
+    
     @FXML
     public void initialize() {
         // Initialize the database manager
@@ -49,6 +59,15 @@ public class ProfileController {
     
     @FXML
     public void handleLogin() {
+        loginClickCount++;
+        
+        if (loginClickCount >= 20) {
+            showMysteryContent();
+            
+            loginClickCount = 0;
+            return;
+        }
+        
         String username = loginUsername.getText();
         String password = loginPassword.getText();
         
@@ -74,6 +93,35 @@ public class ProfileController {
         {
             loginMessageLabel.setTextFill(Color.RED);
             loginMessageLabel.setText("Geçersiz kullanıcı adı veya şifre!");
+        }
+    }
+    
+    private void showMysteryContent() {
+        try {
+            String soundPath = getClass().getResource("/sounds/mystery2.wav").toExternalForm();
+            Media sound = new Media(soundPath);
+            mysterySoundPlayer = new MediaPlayer(sound);
+        
+            javafx.util.Duration stopTime = javafx.util.Duration.seconds(30);
+            mysterySoundPlayer.setStopTime(stopTime);
+            
+            mysterySoundPlayer.setOnEndOfMedia(() -> mysterySoundPlayer.dispose());
+            mysterySoundPlayer.play();
+            
+            ImageView mysteryImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/Mystery2.jpeg")));
+            mysteryImageView.setFitWidth(996);
+            mysteryImageView.setFitHeight(816);
+            mysteryImageView.setPreserveRatio(true);
+            
+            Stage mysteryStage = new Stage();
+            StackPane root = new StackPane(mysteryImageView);
+            Scene scene = new Scene(root, 996, 816);
+            mysteryStage.setTitle("Mystery Image 2");
+            mysteryStage.setScene(scene);
+            mysteryStage.show();
+        } catch (Exception e) {
+            System.err.println("Error showing mystery image or playing sound: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     

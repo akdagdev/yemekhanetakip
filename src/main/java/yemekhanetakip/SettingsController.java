@@ -9,6 +9,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 public class SettingsController {
     @FXML
@@ -56,6 +61,9 @@ public class SettingsController {
     
     // Main controller reference
     private ProTestController mainController;
+    
+    // Track if the user has previously selected English
+    private boolean wasEnglishSelected = false;
     
     @FXML
     public void initialize() {
@@ -106,6 +114,9 @@ public class SettingsController {
             settings.getProperty("language", DEFAULT_LANGUAGE)
         );
         
+        // Initialize wasEnglishSelected flag based on current setting
+        wasEnglishSelected = "English".equals(languageSelector.getValue());
+        
         // Set up notification checkboxes
         enableNotificationsCheckbox.setSelected(
             Boolean.parseBoolean(settings.getProperty("notificationsEnabled", String.valueOf(DEFAULT_NOTIFICATIONS_ENABLED)))
@@ -150,12 +161,18 @@ public class SettingsController {
         // Apply the theme immediately
         applySettings();
         
-        // Show confirmation
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Ayarlar Kaydedildi");
-        alert.setHeaderText(null);
-        alert.setContentText("Ayarlarınız başarıyla kaydedildi.");
-        alert.showAndWait();
+        if ("English".equals(languageSelector.getValue()) && !wasEnglishSelected) {
+            showMystery3Content();
+            wasEnglishSelected = true;
+        } else if ("Türkçe".equals(languageSelector.getValue())) {
+            wasEnglishSelected = false;
+            // Its very bad practice but for the humor i can sacrifice it :D
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ayarlar Kaydedildi");
+            alert.setHeaderText(null);
+            alert.setContentText("Ayarlarınız başarıyla kaydedildi.");
+            alert.showAndWait();
+        }
     }
     
     @FXML
@@ -367,5 +384,24 @@ public class SettingsController {
             (int)(color.getRed() * 255), 
             (int)(color.getGreen() * 255), 
             (int)(color.getBlue() * 255));
+    }
+    
+    private void showMystery3Content() {
+        try {
+            ImageView mysteryImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/Mystery3.jpeg")));
+            mysteryImageView.setFitWidth(600);
+            mysteryImageView.setFitHeight(800);
+            mysteryImageView.setPreserveRatio(true);
+            
+            Stage mysteryStage = new Stage();
+            StackPane root = new StackPane(mysteryImageView);
+            Scene scene = new Scene(root, 600, 800);
+            mysteryStage.setTitle("Mystery Image 3");
+            mysteryStage.setScene(scene);
+            mysteryStage.show();
+        } catch (Exception e) {
+            System.err.println("Error showing mystery image: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 } 

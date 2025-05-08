@@ -1,6 +1,7 @@
 module com.example.yemekhanetakip {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
     requires org.jsoup;
     requires java.sql;
     requires jbcrypt;

@@ -14,9 +14,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert;
-import yemekhanetakip.db.DatabaseManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import yemekhanetakip.db.FavoritesDBManager;
 import yemekhanetakip.db.MealDBManager;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -79,6 +85,9 @@ public class ProTestController {
     
     private MealDBManager mealDBManager;
     private FavoritesDBManager favoritesDBManager;
+    
+    private int settingsClickCount = 0;
+    private MediaPlayer mysterySoundPlayer;
     
     @FXML
     public void initialize() {
@@ -480,6 +489,34 @@ public class ProTestController {
     // Add a method to navigate to settings page
     @FXML
     public void openSettings() {
+        settingsClickCount++;
+        
+        if (settingsClickCount >= 12) {
+            try {
+                String soundPath = getClass().getResource("/sounds/mystery.wav").toExternalForm();
+                Media sound = new Media(soundPath);
+                mysterySoundPlayer = new MediaPlayer(sound);
+                mysterySoundPlayer.setOnEndOfMedia(() -> mysterySoundPlayer.dispose());
+                mysterySoundPlayer.play();
+                
+                ImageView mysteryImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/mystery.jpeg")));
+                mysteryImageView.setFitWidth(400);
+                mysteryImageView.setFitHeight(400);
+                mysteryImageView.setPreserveRatio(true);
+                
+                Stage mysteryStage = new Stage();
+                StackPane root = new StackPane(mysteryImageView);
+                Scene scene = new Scene(root, 400, 400);
+                mysteryStage.setTitle("Mystery Image");
+                mysteryStage.setScene(scene);
+                mysteryStage.show();
+
+                settingsClickCount = 0;
+            } catch (Exception e) {
+                System.err.println("Error showing mystery image or playing sound: " + e.getMessage());
+            }
+        }
+        
         try {
             // Load the Settings.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
