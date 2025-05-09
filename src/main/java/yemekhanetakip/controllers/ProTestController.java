@@ -19,6 +19,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import yemekhanetakip.controllers.FavoritesController;
+import yemekhanetakip.controllers.ProfileController;
+import yemekhanetakip.controllers.SettingsController;
 import yemekhanetakip.scraper.Scraper;
 import yemekhanetakip.User;
 import yemekhanetakip.db.FavoritesDBManager;
@@ -330,12 +333,7 @@ public class ProTestController {
         calorieAxis.setUpperBound(1500); // Adjusted upper bound for total daily calories
         calorieAxis.setTickUnit(250);    // Larger tick unit for better readability
     }
-    
-    // Method to set the current user after login
-    public void setCurrentUser(User user) {
-        this.currentUser = user;
-    }
-    
+
     private void updateMenuForDate(LocalDate date) {
         // Check if the date is a weekend
         if (date.getDayOfWeek().getValue() >= 6) { // 6 is Saturday, 7 is Sunday
@@ -507,34 +505,6 @@ public class ProTestController {
     // Add a method to navigate to settings page
     @FXML
     public void openSettings() {
-        settingsClickCount++;
-
-        if (settingsClickCount >= 12) {
-            try {
-                String soundPath = getClass().getResource("/sounds/mystery.wav").toExternalForm();
-                Media sound = new Media(soundPath);
-                mysterySoundPlayer = new MediaPlayer(sound);
-                mysterySoundPlayer.setOnEndOfMedia(() -> mysterySoundPlayer.dispose());
-                mysterySoundPlayer.play();
-
-                ImageView mysteryImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/mystery.jpeg")));
-                mysteryImageView.setFitWidth(400);
-                mysteryImageView.setFitHeight(400);
-                mysteryImageView.setPreserveRatio(true);
-
-                Stage mysteryStage = new Stage();
-                StackPane root = new StackPane(mysteryImageView);
-                Scene scene = new Scene(root, 400, 400);
-                mysteryStage.setTitle("Mystery Image");
-                mysteryStage.setScene(scene);
-                mysteryStage.show();
-
-                settingsClickCount = 0;
-            } catch (Exception e) {
-                System.err.println("Error showing mystery image or playing sound: " + e.getMessage());
-            }
-        }
-
         try {
             // Load the Settings.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
@@ -592,7 +562,7 @@ public class ProTestController {
             ProfileController profileController = loader.getController();
             
             // Set the currentUser if already logged in
-            if (currentUser != null) {
+            if (User.current != null) {
                 // TODO: Handle logged in state in profile view
             }
             

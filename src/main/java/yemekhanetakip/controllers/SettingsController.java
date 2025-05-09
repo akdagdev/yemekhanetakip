@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import yemekhanetakip.ProTestController;
 
 public class SettingsController {
     @FXML
@@ -166,7 +167,6 @@ public class SettingsController {
         applySettings();
         
         if ("English".equals(languageSelector.getValue()) && !wasEnglishSelected) {
-            showMystery3Content();
             wasEnglishSelected = true;
         } else if ("Türkçe".equals(languageSelector.getValue())) {
             wasEnglishSelected = false;
@@ -388,24 +388,5 @@ public class SettingsController {
             (int)(color.getRed() * 255), 
             (int)(color.getGreen() * 255), 
             (int)(color.getBlue() * 255));
-    }
-    
-    private void showMystery3Content() {
-        try {
-            ImageView mysteryImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/Mystery3.jpeg")));
-            mysteryImageView.setFitWidth(600);
-            mysteryImageView.setFitHeight(800);
-            mysteryImageView.setPreserveRatio(true);
-            
-            Stage mysteryStage = new Stage();
-            StackPane root = new StackPane(mysteryImageView);
-            Scene scene = new Scene(root, 600, 800);
-            mysteryStage.setTitle("Mystery Image 3");
-            mysteryStage.setScene(scene);
-            mysteryStage.show();
-        } catch (Exception e) {
-            System.err.println("Error showing mystery image: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 } 
