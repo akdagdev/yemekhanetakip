@@ -7,6 +7,21 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 
 public class VoteDBManager extends DatabaseManager {
+
+    // Singleton design pattern
+    private static VoteDBManager instance;
+    public static VoteDBManager getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new VoteDBManager();
+        }
+        return instance;
+    }
+
+    // We make constructor private to be sure that no one creates an instance directly
+    private VoteDBManager() { }
+
     public boolean addOrUpdateVote(int userId, int mealId, int rating, String comment)
     {
         return upsertVoteInternal(userId, mealId, rating, comment);

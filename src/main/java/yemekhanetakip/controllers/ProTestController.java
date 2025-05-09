@@ -19,6 +19,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import yemekhanetakip.scraper.Scraper;
+import yemekhanetakip.User;
 import yemekhanetakip.db.FavoritesDBManager;
 import yemekhanetakip.db.MealDBManager;
 import javafx.scene.media.Media;
@@ -27,6 +29,8 @@ import javafx.scene.media.MediaPlayer;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProTestController {
     @FXML
@@ -73,11 +77,19 @@ public class ProTestController {
     private AnchorPane contentPane;
     
     private boolean isDarkMode = false;
-    
+
     private Scraper scraper;
-    
-    // Current logged in user
-    private User currentUser = null;
+
+    public boolean getIsDarkMode(){
+        return isDarkMode;
+    }
+    public void setIsDarkMode(boolean isDarkMode){
+        this.isDarkMode = isDarkMode;
+    }
+
+    public Scraper getScraper() {
+        return scraper;
+    }
     
     // Original menu and nutrition chart containers
     private VBox menuPanel;
@@ -86,14 +98,11 @@ public class ProTestController {
     private MealDBManager mealDBManager;
     private FavoritesDBManager favoritesDBManager;
     
-    private int settingsClickCount = 0;
-    private MediaPlayer mysterySoundPlayer;
-    
     @FXML
     public void initialize() {
-        // Initialize the database manager
-        mealDBManager = new MealDBManager();
-        favoritesDBManager = new FavoritesDBManager();
+        // Initialize the database manager using the singleton pattern design
+        mealDBManager = MealDBManager.getInstance();
+        favoritesDBManager = FavoritesDBManager.getInstance();
         
         // Initialize the scraper
         scraper = new Scraper("https://mediko.gazi.edu.tr/view/page/20412");
@@ -382,11 +391,21 @@ public class ProTestController {
     private void updateMealLabels(String[] foods) {
         Label[] mealLabels = {meal1Label, meal2Label, meal3Label, meal4Label, meal5Label};
         CheckBox[] mealCheckBoxes = {meal1CheckBox, meal2CheckBox, meal3CheckBox, meal4CheckBox, meal5CheckBox};
-        
+
+        List<FavoritesDBManager.FavoriteMeal> FavMeals = new ArrayList<>();
+        if (User.current != null) {
+            FavMeals = favoritesDBManager.getFavoritesByUserId(User.current.getId());
+        }
+        List<String> FavMealNames = new ArrayList<>();
+        for (FavoritesDBManager.FavoriteMeal FavMeal : FavMeals) {
+            FavMealNames.add(FavMeal.getName());
+        }
+
         // Clear all labels and checkboxes first
         for (int i = 0; i < 5; i++) {
             mealLabels[i].setText("");
             mealCheckBoxes[i].setVisible(false);
+            mealCheckBoxes[i].setSelected(FavMealNames.contains(foods[i]));
         }
         
         // Update with actual food items
@@ -439,25 +458,24 @@ public class ProTestController {
     }
     
     private void handleFavoriteToggle(CheckBox checkBox, String mealName) {
-        if (currentUser == null) {
-            // User not logged in, show alert
+        if (User.current == null) {
+            // User is not logged in, show alert
             showLoginRequiredAlert();
             checkBox.setSelected(false);
             return;
         }
-        
+
+        int mealId = mealDBManager.getOrCreateMeal(mealName);
         if (checkBox.isSelected()) {
             // Add to favorites
-            int mealId = mealDBManager.getOrCreateMeal(mealName);
-            boolean success = favoritesDBManager.addToFavorites(currentUser.getId(), mealId);
+            boolean success = favoritesDBManager.addToFavorites(User.current.getId(), mealId);
             if (!success) {
                 // Show error and revert checkbox state
                 showErrorAlert("Favorilere eklenemedi", "Yemek favorilere eklenirken bir hata oluştu.");
                 checkBox.setSelected(false);
             }
         } else {
-            // TODO: Remove from favorites - would need to get the favorite ID
-            // For now, just show a message
+            favoritesDBManager.removeFavorite(User.current.getId(), mealId);
             showInfoAlert("Favorilerden kaldırıldı", "Yemek favorilerinizden kaldırıldı.");
         }
     }
@@ -490,7 +508,7 @@ public class ProTestController {
     @FXML
     public void openSettings() {
         settingsClickCount++;
-        
+
         if (settingsClickCount >= 12) {
             try {
                 String soundPath = getClass().getResource("/sounds/mystery.wav").toExternalForm();
@@ -498,12 +516,12 @@ public class ProTestController {
                 mysterySoundPlayer = new MediaPlayer(sound);
                 mysterySoundPlayer.setOnEndOfMedia(() -> mysterySoundPlayer.dispose());
                 mysterySoundPlayer.play();
-                
+
                 ImageView mysteryImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/mystery.jpeg")));
                 mysteryImageView.setFitWidth(400);
                 mysteryImageView.setFitHeight(400);
                 mysteryImageView.setPreserveRatio(true);
-                
+
                 Stage mysteryStage = new Stage();
                 StackPane root = new StackPane(mysteryImageView);
                 Scene scene = new Scene(root, 400, 400);
@@ -516,7 +534,7 @@ public class ProTestController {
                 System.err.println("Error showing mystery image or playing sound: " + e.getMessage());
             }
         }
-        
+
         try {
             // Load the Settings.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
@@ -610,17 +628,18 @@ public class ProTestController {
     @FXML
     public void openFavorites() {
         try {
+            if (User.current == null) {
+                showLoginRequiredAlert();
+                return;
+            }
+
             // Load the Favorites.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Favorites.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/Favorites.fxml"));
             Parent favoritesView = loader.load();
             
             // Get the controller
             FavoritesController favoritesController = loader.getController();
-            
-            // Set the currentUser if already logged in
-            if (currentUser != null) {
-                favoritesController.setUser(currentUser);
-            }
+            favoritesController.initialize();
             
             // Replace content in the main content area
             if (contentPane != null) {
@@ -650,4 +669,4 @@ public class ProTestController {
             e.printStackTrace();
         }
     }
-} 
+}

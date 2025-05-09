@@ -4,6 +4,21 @@ import java.sql.*;
 import java.util.logging.Level;
 
 public class MealDBManager extends DatabaseManager {
+
+    // Singleton design pattern
+    private static MealDBManager instance;
+    public static MealDBManager getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new MealDBManager();
+        }
+        return instance;
+    }
+
+    // We make constructor private to be sure that no one creates an instance directly
+    private MealDBManager() { }
+
     public void insertMealIfNotExists(String mealName)
     {
         getOrCreateMeal(mealName);

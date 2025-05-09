@@ -10,6 +10,20 @@ import java.util.logging.Level;
 
 public class FavoritesDBManager extends DatabaseManager {
 
+    // Singleton design pattern
+    private static FavoritesDBManager instance;
+    public static FavoritesDBManager getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new FavoritesDBManager();
+        }
+        return instance;
+    }
+
+    // We make constructor private to be sure that no one creates an instance directly
+    private FavoritesDBManager() { }
+
     public boolean addToFavorites(int userId, int mealId)
     {
         final String SQL = "INSERT IGNORE INTO favorites (user_id,meal_id) VALUES (?,?)";
@@ -48,54 +62,58 @@ public class FavoritesDBManager extends DatabaseManager {
         }
     }
 
-    public List<FavoriteMeal> getFavoritesByUser(int userId, String orderBy)
-    {
-        List<FavoriteMeal> result = new ArrayList<>();
-
-        final String SQL = "SELECT f.meal_id,m.meal_name,f.date_added FROM favorites f JOIN meals m ON f.meal_id=m.meal_id WHERE f.user_id=? ORDER BY " + orderBy;
-
-        try (Connection c = getConnection();
-             PreparedStatement ps = c.prepareStatement(SQL)
-        )
-
-        {
-            ps.setInt(1, userId);
-            try (ResultSet rs = ps.executeQuery())
-            {
-                while (rs.next())
-                {
-                    result.add(new FavoriteMeal(
-                            rs.getInt("meal_id"),
-                            rs.getString("meal_name"),
-                            rs.getDate("date_added").toString()
-                    ));
-                }
-            }
-        }
-        catch (SQLException e)
-        {
-            LOG.log(Level.SEVERE, "getFavoritesByUser error", e);
-        }
-        return result;
+    public List<FavoriteMeal> getFavoritesByUserId(int userId) {
+        return getFavoritesByUserId(userId, "meal_name ASC");
     }
 
-    // POJO for favorite meals
-    public static class FavoriteMeal
-    {
-        private final int mealId;
-        private final String mealName;
-        private final String dateAdded;
+    public List<FavoriteMeal> getFavoritesByUserId(int userId, String orderBy) {
+        List<FavoriteMeal> favorites = new ArrayList<>();
 
-        public FavoriteMeal(int mealId, String mealName, String dateAdded)
-        {
-            this.mealId = mealId;
-            this.mealName = mealName;
-            this.dateAdded = dateAdded;
+        try {
+            Connection conn = getConnection();
+            String query = "SELECT f.meal_id, m.meal_name " +
+                    "FROM favorites f " +
+                    "JOIN meals m ON f.meal_id = m.meal_id " +
+                    "WHERE f.user_id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, userId);
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                FavoriteMeal meal = new FavoriteMeal(
+                        rs.getInt("meal_id"),
+                        rs.getString("meal_name")
+                );
+                favorites.add(meal);
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        public int getMealId() { return mealId; }
-        public String getMealName() { return mealName; }
-        public String getDateAdded() { return dateAdded; }
+        return favorites;
+    }
 
+    // Helper class to represent a favorite meal
+    public class FavoriteMeal {
+        private int id;
+        private String name;
+
+        public FavoriteMeal(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

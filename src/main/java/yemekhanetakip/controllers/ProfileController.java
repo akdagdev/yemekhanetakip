@@ -1,9 +1,9 @@
-package yemekhanetakip;
+package yemekhanetakip.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import yemekhanetakip.db.DatabaseManager;
+import yemekhanetakip.User;
 import yemekhanetakip.db.UserDBManager;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -50,7 +50,7 @@ public class ProfileController {
     @FXML
     public void initialize() {
         // Initialize the database manager
-        dbManager = new UserDBManager();
+        dbManager = UserDBManager.getInstance();
         
         // Clear any previous message
         loginMessageLabel.setText("");
@@ -85,7 +85,8 @@ public class ProfileController {
         {
             loginMessageLabel.setTextFill(Color.GREEN);
             loginMessageLabel.setText("Giriş başarılı! Hoş geldiniz, " + user.getFullName());
-            
+
+            User.current = user;
             // TODO: Update UI to show user is logged in
             // TODO: Store user information in session
         }
@@ -165,7 +166,7 @@ public class ProfileController {
         }
         
         // Create a new user
-        User newUser = new User(0, fullName, email, username, password);
+        User newUser = new User(0, fullName, email, username);
         
         // Attempt to register the user
         boolean registrationSuccess = dbManager.registerUser(newUser,  password);

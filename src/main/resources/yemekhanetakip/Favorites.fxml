@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="favoritesPane" prefHeight="520.0" prefWidth="570.0" styleClass="favorites-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.FavoritesController">
+<AnchorPane fx:id="favoritesPane" prefHeight="520.0" prefWidth="570.0" styleClass="favorites-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.controllers.FavoritesController">
     <VBox alignment="CENTER" prefHeight="520.0" prefWidth="570.0" spacing="15">
         <padding>
             <Insets bottom="20" left="30" right="30" top="20" />

@@ -1,10 +1,6 @@
 package yemekhanetakip.db;
 
-import yemekhanetakip.PasswordUtil;
-import yemekhanetakip.User;
-
 import java.sql.*;
-import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

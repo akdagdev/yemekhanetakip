@@ -1,7 +1,7 @@
 package yemekhanetakip;
 
-import yemekhanetakip.db.DatabaseManager;
 import yemekhanetakip.db.MealDBManager;
+import yemekhanetakip.scraper.Scraper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,24 +19,12 @@ public class ScraperToDatabaseTESTclass {
             for (String yemek : yemekler) {
                 if (yemek != null && !yemek.isBlank()) {
 
-
-                    if (yemek.contains("* "))
-                    {
-                        yemek = yemek.replace("* ", "");
-
-                    }
-                    else if (yemek.contains("*"))
-                    {
-                         yemek = yemek.replace("*", "");
-                    }
-
-
                     yemekSeti.add(yemek);
                 }
             }
         }
 
-        MealDBManager dbManager = new MealDBManager();
+        MealDBManager dbManager = MealDBManager.getInstance();
         for (String yemek : yemekSeti) {
             dbManager.insertMealIfNotExists(yemek);
         }

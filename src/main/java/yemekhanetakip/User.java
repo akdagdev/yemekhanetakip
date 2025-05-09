@@ -1,19 +1,21 @@
 package yemekhanetakip;
 
 public class User {
+
+    // Current user that logged in
+    public static User current;
+
     private int id;
     private String fullName;
     private String email;
     private String username;
-    private String password;
-    
+
     // Constructor
-    public User(int id, String fullName, String email, String username, String password) {
+    public User(int id, String fullName, String email, String username) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.username = username;
-        this.password = password;
     }
     
     // Getters and Setters
@@ -48,14 +50,7 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
     
     @Override
     public String toString() {

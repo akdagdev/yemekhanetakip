@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import yemekhanetakip.controllers.ProTestController;
+import yemekhanetakip.scraper.Scraper;
 
 import java.io.File;
 import java.io.FileInputStream;

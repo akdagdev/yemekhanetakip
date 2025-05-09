@@ -1,4 +1,4 @@
-package yemekhanetakip;
+package yemekhanetakip.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -58,9 +58,13 @@ public class SettingsController {
     // Properties for settings storage
     private Properties settings;
     private final String SETTINGS_FILE = "yemekhanetakip_settings.properties";
-    
+
     // Main controller reference
     private ProTestController mainController;
+
+    public ProTestController getMainController() {
+        return mainController;
+    }
     
     // Track if the user has previously selected English
     private boolean wasEnglishSelected = false;

@@ -2,7 +2,7 @@
     Scraper class is designed for scraping the Gazi University's meal list webpage.
     It fetches the url, parses it using jsoup library and converts the html table into usable form.
  */
-package yemekhanetakip;
+package yemekhanetakip.scraper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

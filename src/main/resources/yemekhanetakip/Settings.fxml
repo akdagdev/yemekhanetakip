@@ -7,7 +7,7 @@
 <?import javafx.collections.*?>
 <?import java.lang.*?>
 
-<AnchorPane fx:id="settingsPane" prefHeight="500.0" prefWidth="570.0" styleClass="settings-container" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.SettingsController">
+<AnchorPane fx:id="settingsPane" prefHeight="500.0" prefWidth="570.0" styleClass="settings-container" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.controllers.SettingsController">
     <ScrollPane fitToWidth="true" fitToHeight="false" prefHeight="500.0" prefWidth="570.0" styleClass="settings-scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox prefHeight="500.0" prefWidth="570.0" spacing="20" styleClass="settings-panel">
             <padding>
