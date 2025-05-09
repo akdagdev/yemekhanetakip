@@ -1,4 +1,4 @@
-package yemekhanetakip;
+package yemekhanetakip.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,20 +14,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import yemekhanetakip.controllers.FavoritesController;
-import yemekhanetakip.controllers.ProfileController;
-import yemekhanetakip.controllers.SettingsController;
 import yemekhanetakip.scraper.Scraper;
-import yemekhanetakip.User;
 import yemekhanetakip.db.FavoritesDBManager;
 import yemekhanetakip.db.MealDBManager;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import yemekhanetakip.User;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -110,7 +100,6 @@ public class ProTestController {
         // Initialize the scraper
         scraper = new Scraper("https://mediko.gazi.edu.tr/view/page/20412");
         
-        // Initialize the chart
         setupChart();
         
         // Set up date picker listener
@@ -222,7 +211,7 @@ public class ProTestController {
      * Loads default content into the provided content pane
      */
     private void loadDefaultContent(AnchorPane targetPane) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ProTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/ProTest.fxml"));
         Parent mainView = loader.load();
         
         // Try to find content container
@@ -264,7 +253,7 @@ public class ProTestController {
      * Loads default content into the provided container
      */
     private void loadDefaultContentIntoContainer(HBox contentContainer) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ProTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/ProTest.fxml"));
         Parent mainView = loader.load();
         
         // Try to find the content pane
@@ -389,27 +378,88 @@ public class ProTestController {
     private void updateMealLabels(String[] foods) {
         Label[] mealLabels = {meal1Label, meal2Label, meal3Label, meal4Label, meal5Label};
         CheckBox[] mealCheckBoxes = {meal1CheckBox, meal2CheckBox, meal3CheckBox, meal4CheckBox, meal5CheckBox};
-
-        List<FavoritesDBManager.FavoriteMeal> FavMeals = new ArrayList<>();
-        if (User.current != null) {
-            FavMeals = favoritesDBManager.getFavoritesByUserId(User.current.getId());
-        }
+        
+        // Get list of favorite meal names
         List<String> FavMealNames = new ArrayList<>();
-        for (FavoritesDBManager.FavoriteMeal FavMeal : FavMeals) {
-            FavMealNames.add(FavMeal.getName());
+        try {
+            List<FavoritesDBManager.FavoriteMeal> favorites = new ArrayList<>();
+            if (User.current != null) {
+                favorites = favoritesDBManager.getFavoritesByUserId(User.current.getId());
+            }
+            
+            // Extract the names from favorite meals
+            for (FavoritesDBManager.FavoriteMeal meal : favorites) {
+                FavMealNames.add(meal.getName());
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting favorite meals: " + e.getMessage());
         }
-
-        // Clear all labels and checkboxes first
-        for (int i = 0; i < 5; i++) {
+        
+        // Clear all meal labels first
+        for (int i = 0; i < mealLabels.length; i++) {
             mealLabels[i].setText("");
             mealCheckBoxes[i].setVisible(false);
+            mealCheckBoxes[i].setSelected(false);
+            
+            // Remove existing event handlers
+            mealLabels[i].setOnMouseClicked(null);
+        }
+        
+        // Update checkbox selection based on favorites
+        for (int i = 0; i < Math.min(foods.length, 5); i++) {
+            mealCheckBoxes[i].setVisible(true);
             mealCheckBoxes[i].setSelected(FavMealNames.contains(foods[i]));
         }
         
         // Update with actual food items
         for (int i = 0; i < Math.min(foods.length, 5); i++) {
             mealLabels[i].setText(foods[i]);
-            mealCheckBoxes[i].setVisible(true);
+            
+            // Add click event to open food detail
+            final int index = i;
+            mealLabels[i].setOnMouseClicked(event -> openFoodDetail(foods[index], datePicker.getValue()));
+            
+            // Add hover effect to indicate clickable
+            mealLabels[i].setStyle("-fx-cursor: hand;");
+        }
+    }
+    
+    /**
+     * Opens the food detail page for the selected food
+     * 
+     * @param foodName The name of the food to display details for
+     * @param date The date the food was/will be served
+     */
+    private void openFoodDetail(String foodName, LocalDate date) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/Foods.fxml"));
+            Parent foodDetailView = loader.load();
+            
+            // Get the controller
+            Object controller = loader.getController();
+            
+            // Try to set food details if the controller supports it
+            try {
+                // Use reflection to find and call the setFoodDetails method if it exists
+                java.lang.reflect.Method setFoodDetails = controller.getClass().getMethod("setFoodDetails", String.class, LocalDate.class);
+                setFoodDetails.invoke(controller, foodName, date);
+            } catch (Exception e) {
+                System.err.println("Warning: Could not set food details on controller: " + e.getMessage());
+                // Continue anyway - the controller might initialize with default values
+            }
+            
+            // Clear content pane and add food detail view
+            if (contentPane != null) {
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(foodDetailView);
+                
+                // Apply current theme
+                applyTheme();
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading food detail view: " + e.getMessage());
+            e.printStackTrace();
+            showErrorAlert("Hata", "Yemek detayları yüklenirken bir hata oluştu.");
         }
     }
     
@@ -507,7 +557,7 @@ public class ProTestController {
     public void openSettings() {
         try {
             // Load the Settings.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/Settings.fxml"));
             Parent settingsView = loader.load();
             
             // Get the controller
@@ -555,7 +605,7 @@ public class ProTestController {
     public void openProfile() {
         try {
             // Load the Profile.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Profile.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/Profile.fxml"));
             Parent profileView = loader.load();
             
             // Get the controller

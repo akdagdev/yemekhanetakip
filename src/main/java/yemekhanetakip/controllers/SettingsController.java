@@ -9,12 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import yemekhanetakip.ProTestController;
 
 public class SettingsController {
     @FXML
@@ -170,13 +164,13 @@ public class SettingsController {
             wasEnglishSelected = true;
         } else if ("Türkçe".equals(languageSelector.getValue())) {
             wasEnglishSelected = false;
-            // Its very bad practice but for the humor i can sacrifice it :D
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Ayarlar Kaydedildi");
-            alert.setHeaderText(null);
-            alert.setContentText("Ayarlarınız başarıyla kaydedildi.");
-            alert.showAndWait();
         }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Ayarlar Kaydedildi");
+        alert.setHeaderText(null);
+        alert.setContentText("Ayarlarınız başarıyla kaydedildi.");
+        alert.showAndWait();
     }
     
     @FXML

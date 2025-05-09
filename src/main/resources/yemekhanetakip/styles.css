@@ -991,4 +991,191 @@
 
 .delete-button:hover {
     -fx-background-color: #c0392b;
+}
+
+/* Food Detail View Styles */
+.detail-container {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15px;
+    -fx-transition: background-color 0.3s ease;
+}
+
+.food-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212529;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-padding: 10px 15px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 1);
+}
+
+.section-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #343a40;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-padding: 5px 0;
+}
+
+.rating-value {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #228be6;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.total-ratings {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6c757d;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.avg-stars-container {
+    -fx-padding: 5px 0;
+}
+
+.star-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #dee2e6;
+    -fx-font-size: 20px;
+    -fx-padding: 0 2px;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+
+.star-button:selected {
+    -fx-text-fill: #fcc419;
+}
+
+.star-button:hover {
+    -fx-text-fill: #fcc419;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.submit-button {
+    -fx-background-color: #4dabf7;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.2s;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+.submit-button:hover {
+    -fx-background-color: #228be6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 2);
+}
+
+.comments-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-min-height: 350px;
+}
+
+.comments-container {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-spacing: 15px;
+}
+
+.comment-box {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 1);
+    -fx-padding: 15px;
+    -fx-min-height: 120px;
+}
+
+.comment-box:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 2);
+    -fx-background-color: #fafafa;
+}
+
+.dark-mode .comment-box:hover {
+    -fx-background-color: #2c2c2c;
+}
+
+.comment-user {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #343a40;
+}
+
+.comment-date {
+    -fx-font-size: 12px;
+    -fx-text-fill: #868e96;
+}
+
+.comment-rating {
+    -fx-font-size: 14px;
+    -fx-text-fill: #fcc419;
+}
+
+.comment-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #495057;
+    -fx-wrap-text: true;
+    -fx-line-spacing: 1.4;
+}
+
+/* Dark mode styles for food detail */
+.dark-mode .detail-container {
+    -fx-background-color: #212529;
+}
+
+.dark-mode .food-title {
+    -fx-text-fill: #f8f9fa;
+    -fx-background-color: #343a40;
+}
+
+.dark-mode .section-header {
+    -fx-text-fill: #f8f9fa;
+}
+
+.dark-mode .rating-value {
+    -fx-text-fill: #4dabf7;
+}
+
+.dark-mode .total-ratings {
+    -fx-text-fill: #adb5bd;
+}
+
+.dark-mode .star-button {
+    -fx-text-fill: #495057;
+}
+
+.dark-mode .star-button:selected, 
+.dark-mode .star-button:hover {
+    -fx-text-fill: #fcc419;
+}
+
+.dark-mode .submit-button {
+    -fx-background-color: #339af0;
+}
+
+.dark-mode .submit-button:hover {
+    -fx-background-color: #228be6;
+}
+
+.dark-mode .comment-box {
+    -fx-background-color: #343a40;
+}
+
+.dark-mode .comment-user {
+    -fx-text-fill: #f8f9fa;
+}
+
+.dark-mode .comment-date {
+    -fx-text-fill: #adb5bd;
+}
+
+.dark-mode .comment-text {
+    -fx-text-fill: #dee2e6;
 } 
