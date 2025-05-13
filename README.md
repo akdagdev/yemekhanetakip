@@ -18,8 +18,8 @@ This application scrapes Gazi University's cafeteria website to provide students
 
 ## Screenshots
 
-![Main Menu](images/main-menu.png)
-![Dark Theme](images/dark-theme.png)
+![Main Menu](src/main/resources/images/main-menu.png)
+![Dark Theme](src/main/resources/images/dark-theme.png)
 
 ## Tech Stack
 
