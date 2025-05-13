@@ -6,8 +6,8 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 
-<AnchorPane fx:id="userProfilePane" prefHeight="520.0" prefWidth="800.0" styleClass="profile-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.UserProfileController">
-    <BorderPane prefHeight="520.0" prefWidth="800.0">
+<AnchorPane fx:id="userProfilePane" prefHeight="520.0" maxWidth="570.0" styleClass="profile-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.controllers.UserProfileController">
+    <BorderPane prefHeight="520.0" prefWidth="500.0">
         <top>
             <HBox alignment="CENTER_LEFT" spacing="15" styleClass="profile-header">
                 <padding>
@@ -48,7 +48,6 @@
                 <VBox spacing="8">
                     <Label styleClass="profile-menu-header" text="MENÜ" />
                     <Button fx:id="profileInfoButton" onAction="#showProfileInfo" maxWidth="Infinity" styleClass="profile-menu-button" text="Profil Bilgileri" />
-                    <Button fx:id="mealHistoryButton" onAction="#showMealHistory" maxWidth="Infinity" styleClass="profile-menu-button" text="Yemek Geçmişi" />
                     <Button fx:id="accountSettingsButton" onAction="#showAccountSettings" maxWidth="Infinity" styleClass="profile-menu-button" text="Hesap Ayarları" />
                     <Button fx:id="notificationsButton" onAction="#showNotifications" maxWidth="Infinity" styleClass="profile-menu-button" text="Bildirimler" />
                 </VBox>
@@ -99,33 +98,6 @@
                         </VBox.margin>
                     </Button>
                 </VBox>
-    
-                <VBox fx:id="mealHistoryPanel" styleClass="profile-content-panel" visible="false">
-                    <padding>
-                        <Insets bottom="20" left="30" right="30" top="20" />
-                    </padding>
-                    
-                    <Label styleClass="content-header" text="Yemek Geçmişi">
-                        <font>
-                            <Font name="System Bold" size="20.0" />
-                        </font>
-                    </Label>
-                    
-                    <Separator>
-                        <VBox.margin>
-                            <Insets bottom="20" top="10" />
-                        </VBox.margin>
-                    </Separator>
-                    
-                    <TableView fx:id="mealHistoryTable" VBox.vgrow="ALWAYS">
-                        <columns>
-                            <TableColumn fx:id="dateColumn" text="Tarih" prefWidth="100" />
-                            <TableColumn fx:id="mealTypeColumn" text="Öğün" prefWidth="100" />
-                            <TableColumn fx:id="mealNameColumn" text="Yemek Adı" prefWidth="200" />
-                            <TableColumn fx:id="caloriesColumn" text="Kalori" prefWidth="80" />
-                        </columns>
-                    </TableView>
-                </VBox>
                 
                 <VBox fx:id="accountSettingsPanel" styleClass="profile-content-panel" visible="false">
                     <padding>
@@ -163,12 +135,6 @@
                             <PasswordField fx:id="confirmPasswordField" promptText="Yeni şifre tekrar" />
                             <Button fx:id="updatePasswordButton" onAction="#handleUpdatePassword" text="Şifreyi Güncelle" />
                         </VBox>
-                        
-                        <Label styleClass="settings-label" text="Profil Resmi:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                        <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="2" GridPane.columnIndex="1">
-                            <Button fx:id="uploadImageButton" onAction="#handleUploadImage" text="Resim Yükle" />
-                            <Label fx:id="uploadImageStatus" />
-                        </HBox>
                         
                         <Separator GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2">
                             <GridPane.margin>

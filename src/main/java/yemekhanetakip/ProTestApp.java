@@ -19,7 +19,7 @@ public class ProTestApp extends Application {
         Properties settings = loadSettings();
         
         Scraper scraper = new Scraper("https://mediko.gazi.edu.tr/view/page/20412");
-        FXMLLoader fxmlLoader = new FXMLLoader(ProTestApp.class.getResource("ProTest.fxml"));
+        FXMLLoader fxmlLoader = SceneFactory.getScene("PROTEST");
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         
         // First add the base stylesheet
