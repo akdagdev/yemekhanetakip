@@ -1,15 +1,14 @@
 package yemekhanetakip.controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import yemekhanetakip.User;
 import yemekhanetakip.db.MealDBManager;
 import yemekhanetakip.db.VoteDBManager;
@@ -73,6 +72,9 @@ public class FoodDetailController {
     
     @FXML
     private VBox commentsContainer;
+
+    @FXML
+    private ScrollPane scrollPane;
     
     private String foodName;
     private LocalDate foodDate;
@@ -89,6 +91,12 @@ public class FoodDetailController {
         voteDBManager = VoteDBManager.getInstance();
 
         setupStarButtons();
+
+        Platform.runLater(() -> {
+            PauseTransition delay = new PauseTransition(Duration.millis(25));
+            delay.setOnFinished(e -> scrollPane.setVvalue(0));
+            delay.play();
+        });
     }
     
     /**
@@ -102,6 +110,7 @@ public class FoodDetailController {
         this.foodDate = date;
         
         foodNameLabel.setText(foodName);
+        Platform.runLater(() -> scrollPane.setVvalue(0));
         
         loadFoodRatings();
     }
@@ -164,7 +173,7 @@ public class FoodDetailController {
      */
     private List<Map<String, Object>> getVotesForMeal(int mealId) {
         List<Map<String, Object>> votes = new ArrayList<>();
-        final String SQL = "SELECT mv.user_rate, mv.user_comment, mv.comment_date, u.username " +
+        final String SQL = "SELECT mv.user_rate, mv.user_comment, mv.comment_date, u.user_name " +
                            "FROM meal_votes mv " +
                            "JOIN users u ON mv.user_id = u.user_id " +
                            "WHERE mv.meal_id = ?";
@@ -180,7 +189,7 @@ public class FoodDetailController {
                     vote.put("rating", rs.getInt("user_rate"));
                     vote.put("comment", rs.getString("user_comment"));
                     vote.put("date", rs.getDate("comment_date").toLocalDate());
-                    vote.put("username", rs.getString("username"));
+                    vote.put("username", rs.getString("user_name"));
                     votes.add(vote);
                 }
             }

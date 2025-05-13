@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert;
+import yemekhanetakip.SceneFactory;
 import yemekhanetakip.scraper.Scraper;
 import yemekhanetakip.db.FavoritesDBManager;
 import yemekhanetakip.db.MealDBManager;
@@ -211,7 +212,7 @@ public class ProTestController {
      * Loads default content into the provided content pane
      */
     private void loadDefaultContent(AnchorPane targetPane) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/ProTest.fxml"));
+        FXMLLoader loader = SceneFactory.getScene("PROTEST");
         Parent mainView = loader.load();
         
         // Try to find content container
@@ -253,7 +254,7 @@ public class ProTestController {
      * Loads default content into the provided container
      */
     private void loadDefaultContentIntoContainer(HBox contentContainer) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/ProTest.fxml"));
+        FXMLLoader loader = SceneFactory.getScene("PROTEST");
         Parent mainView = loader.load();
         
         // Try to find the content pane
@@ -411,7 +412,7 @@ public class ProTestController {
             mealCheckBoxes[i].setSelected(FavMealNames.contains(foods[i]));
         }
         
-        // Update with actual food items
+        // Update with actual food itemsx
         for (int i = 0; i < Math.min(foods.length, 5); i++) {
             mealLabels[i].setText(foods[i]);
             
@@ -432,7 +433,7 @@ public class ProTestController {
      */
     private void openFoodDetail(String foodName, LocalDate date) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/Foods.fxml"));
+            FXMLLoader loader = SceneFactory.getScene("FOODS");
             Parent foodDetailView = loader.load();
             
             // Get the controller
@@ -557,7 +558,7 @@ public class ProTestController {
     public void openSettings() {
         try {
             // Load the Settings.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/Settings.fxml"));
+            FXMLLoader loader = SceneFactory.getScene("SETTINGS");
             Parent settingsView = loader.load();
             
             // Get the controller
@@ -604,17 +605,28 @@ public class ProTestController {
     @FXML
     public void openProfile() {
         try {
-            // Load the Profile.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/Profile.fxml"));
+            FXMLLoader loader;
+            if (User.current == null) {
+                // If the user is not logged in
+                // Load the Profile.fxml
+                loader = SceneFactory.getScene("PROFILE");
+
+                // Get the controller
+                ProfileController profileController = loader.getController();
+                // TODO: Handle logged in state in profile view
+            } else {
+                // If the user is logged in
+                loader = SceneFactory.getScene("USER_PROFILE");
+
+                // Get the controller
+                ProfileController profileController = loader.getController();
+            }
+
             Parent profileView = loader.load();
-            
-            // Get the controller
-            ProfileController profileController = loader.getController();
+
             
             // Set the currentUser if already logged in
-            if (User.current != null) {
-                // TODO: Handle logged in state in profile view
-            }
+
             
             // Replace content in the main content area
             if (contentPane != null) {
@@ -654,7 +666,7 @@ public class ProTestController {
             }
 
             // Load the Favorites.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/yemekhanetakip/Favorites.fxml"));
+            FXMLLoader loader = SceneFactory.getScene("FAVORITES");
             Parent favoritesView = loader.load();
             
             // Get the controller

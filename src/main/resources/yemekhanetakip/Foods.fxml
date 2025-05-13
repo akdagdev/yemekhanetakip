@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="570.0" styleClass="detail-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.controllers.FoodDetailController">
-    <ScrollPane fitToWidth="true" vbarPolicy="ALWAYS" hbarPolicy="NEVER" styleClass="main-scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" vvalue="0.0">
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" vbarPolicy="ALWAYS" hbarPolicy="NEVER" styleClass="main-scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" vvalue="0.0">
         <content>
             <VBox prefWidth="530.0" maxWidth="530.0" spacing="15" styleClass="settings-panel">
                 <padding>
