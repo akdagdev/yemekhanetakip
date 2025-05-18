@@ -31,9 +31,7 @@ public class FavoritesController {
         // Setup sort options
         ObservableList<String> sortOptions = FXCollections.observableArrayList(
             "Alfabetik (A-Z)", 
-            "Alfabetik (Z-A)",
-            "En son eklenen",
-            "En eski eklenen"
+            "Alfabetik (Z-A)"
         );
         sortComboBox.setItems(sortOptions);
         sortComboBox.getSelectionModel().selectFirst();
@@ -65,12 +63,6 @@ public class FavoritesController {
                     break;
                 case "Alfabetik (Z-A)":
                     orderBy = "meal_name DESC";
-                    break;
-                case "En son eklenen":
-                    orderBy = "date_added DESC";
-                    break;
-                case "En eski eklenen":
-                    orderBy = "date_added ASC";
                     break;
             }
         }

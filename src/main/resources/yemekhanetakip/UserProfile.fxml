@@ -6,8 +6,8 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 
-<AnchorPane fx:id="userProfilePane" prefHeight="520.0" maxWidth="570.0" styleClass="profile-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.controllers.UserProfileController">
-    <BorderPane prefHeight="520.0" prefWidth="500.0">
+<AnchorPane fx:id="userProfilePane" prefHeight="520.0" maxWidth="500.0" styleClass="profile-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.controllers.UserProfileController">
+    <BorderPane prefHeight="520.0" prefWidth="300.0">
         <top>
             <HBox alignment="CENTER_LEFT" spacing="15" styleClass="profile-header">
                 <padding>
@@ -19,21 +19,16 @@
                     </font>
                 </Label>
                 <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Çıkış Yap" />
             </HBox>
         </top>
         
         <left>
-            <VBox prefWidth="250.0" styleClass="profile-sidebar" spacing="10">
+            <VBox prefWidth="200.0" styleClass="profile-sidebar" spacing="10">
                 <padding>
                     <Insets bottom="20" left="20" right="20" top="20" />
                 </padding>
                 
                 <VBox alignment="CENTER" spacing="15">
-                    <ImageView fx:id="profileImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@images/default_profile.png" />
-                    </ImageView>
-                    
                     <Label fx:id="userFullNameLabel" styleClass="profile-name" text="Ad Soyad">
                         <font>
                             <Font name="System Bold" size="18.0" />
@@ -44,13 +39,6 @@
                 </VBox>
                 
                 <Separator />
-                
-                <VBox spacing="8">
-                    <Label styleClass="profile-menu-header" text="MENÜ" />
-                    <Button fx:id="profileInfoButton" onAction="#showProfileInfo" maxWidth="Infinity" styleClass="profile-menu-button" text="Profil Bilgileri" />
-                    <Button fx:id="accountSettingsButton" onAction="#showAccountSettings" maxWidth="Infinity" styleClass="profile-menu-button" text="Hesap Ayarları" />
-                    <Button fx:id="notificationsButton" onAction="#showNotifications" maxWidth="Infinity" styleClass="profile-menu-button" text="Bildirimler" />
-                </VBox>
             </VBox>
         </left>
         
@@ -87,89 +75,7 @@
                         
                         <Label styleClass="profile-field-label" text="E-posta:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
                         <Label fx:id="emailValue" styleClass="profile-field-value" text="kullanici@email.com" GridPane.rowIndex="2" GridPane.columnIndex="1" />
-                        
-                        <Label styleClass="profile-field-label" text="Kayıt Tarihi:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                        <Label fx:id="registrationDateValue" styleClass="profile-field-value" text="01.01.2023" GridPane.rowIndex="3" GridPane.columnIndex="1" />
                     </GridPane>
-                    
-                    <Button fx:id="editProfileButton" onAction="#handleEditProfile" styleClass="edit-button" text="Bilgileri Düzenle">
-                        <VBox.margin>
-                            <Insets top="30" />
-                        </VBox.margin>
-                    </Button>
-                </VBox>
-                
-                <VBox fx:id="accountSettingsPanel" styleClass="profile-content-panel" visible="false">
-                    <padding>
-                        <Insets bottom="20" left="30" right="30" top="20" />
-                    </padding>
-                    
-                    <Label styleClass="content-header" text="Hesap Ayarları">
-                        <font>
-                            <Font name="System Bold" size="20.0" />
-                        </font>
-                    </Label>
-                    
-                    <Separator>
-                        <VBox.margin>
-                            <Insets bottom="20" top="10" />
-                        </VBox.margin>
-                    </Separator>
-                    
-                    <GridPane hgap="15" vgap="20">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="150.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="300.0" prefWidth="350.0" />
-                        </columnConstraints>
-                        
-                        <Label styleClass="settings-label" text="E-posta Değiştir:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                        <HBox spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="1">
-                            <TextField fx:id="newEmailField" promptText="Yeni e-posta adresi" HBox.hgrow="ALWAYS" />
-                            <Button fx:id="updateEmailButton" onAction="#handleUpdateEmail" text="Güncelle" />
-                        </HBox>
-                        
-                        <Label styleClass="settings-label" text="Şifre Değiştir:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                        <VBox spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="1">
-                            <PasswordField fx:id="currentPasswordField" promptText="Mevcut şifre" />
-                            <PasswordField fx:id="newPasswordField" promptText="Yeni şifre" />
-                            <PasswordField fx:id="confirmPasswordField" promptText="Yeni şifre tekrar" />
-                            <Button fx:id="updatePasswordButton" onAction="#handleUpdatePassword" text="Şifreyi Güncelle" />
-                        </VBox>
-                        
-                        <Separator GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2">
-                            <GridPane.margin>
-                                <Insets top="20" bottom="20" />
-                            </GridPane.margin>
-                        </Separator>
-                        
-                        <Label styleClass="settings-label" text="Hesabı Sil:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-                        <VBox spacing="10" GridPane.rowIndex="4" GridPane.columnIndex="1">
-                            <Label text="Dikkat: Bu işlem geri alınamaz ve tüm verileriniz silinecektir." styleClass="warning-text" />
-                            <Button fx:id="deleteProfileButton" onAction="#handleDeleteProfile" text="Hesabımı Sil" styleClass="delete-button" />
-                        </VBox>
-                    </GridPane>
-                </VBox>
-                
-                <VBox fx:id="notificationsPanel" styleClass="profile-content-panel" visible="false">
-                    <padding>
-                        <Insets bottom="20" left="30" right="30" top="20" />
-                    </padding>
-                    
-                    <Label styleClass="content-header" text="Bildirimler">
-                        <font>
-                            <Font name="System Bold" size="20.0" />
-                        </font>
-                    </Label>
-                    
-                    <Separator>
-                        <VBox.margin>
-                            <Insets bottom="20" top="10" />
-                        </VBox.margin>
-                    </Separator>
-                    
-                    <VBox fx:id="notificationsContainer" spacing="10" VBox.vgrow="ALWAYS">
-                        <Label text="Henüz bildirim bulunmuyor." fx:id="noNotificationsLabel" />
-                    </VBox>
                 </VBox>
             </StackPane>
         </center>

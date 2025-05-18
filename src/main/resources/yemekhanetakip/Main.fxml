@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="main-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.controllers.ProTestController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="main-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yemekhanetakip.controllers.MainController">
     
     <HBox alignment="CENTER_LEFT" layoutX="15.0" layoutY="5.0" prefHeight="36.0" prefWidth="770.0" spacing="15">
         <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
@@ -36,7 +36,7 @@
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../images/GaziLogo.png" />
+                                    <Image url="@../images/home.png" />
                                 </image>
                             </ImageView>
                         </graphic>
@@ -51,7 +51,7 @@
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../images/GaziLogo.png" />
+                                    <Image url="@../images/profile-circle.png" />
                                 </image>
                             </ImageView>
                         </graphic>
@@ -66,7 +66,7 @@
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../images/GaziLogo.png" />
+                                    <Image url="@../images/favorites.png" />
                                 </image>
                             </ImageView>
                         </graphic>
@@ -81,7 +81,7 @@
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../images/GaziLogo.png" />
+                                    <Image url="@../images/settings.png" />
                                 </image>
                             </ImageView>
                         </graphic>

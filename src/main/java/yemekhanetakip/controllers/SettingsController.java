@@ -55,9 +55,9 @@ public class SettingsController {
     private final String SETTINGS_FILE = "yemekhanetakip_settings.properties";
 
     // Main controller reference
-    private ProTestController mainController;
+    private MainController mainController;
 
-    public ProTestController getMainController() {
+    public MainController getMainController() {
         return mainController;
     }
     
@@ -131,7 +131,7 @@ public class SettingsController {
         );
     }
     
-    public void setMainController(ProTestController controller) {
+    public void setMainController(MainController controller) {
         this.mainController = controller;
         System.out.println("Main controller set in settings controller");
         
@@ -228,7 +228,7 @@ public class SettingsController {
     private void applyColorScheme(Color primaryColor, Color secondaryColor) {
         if (mainController == null) return;
         
-        // Get the main AnchorPane (rootPane) from the ProTestController
+        // Get the main AnchorPane (rootPane) from the MainController
         AnchorPane rootPane = mainController.getRootPane();
         
         if (rootPane == null) {

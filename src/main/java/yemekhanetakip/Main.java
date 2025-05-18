@@ -4,7 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import yemekhanetakip.controllers.ProTestController;
+import yemekhanetakip.controllers.MainController;
+import yemekhanetakip.db.DBMealListUpdater;
 import yemekhanetakip.scraper.Scraper;
 
 import java.io.File;
@@ -12,14 +13,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ProTestApp extends Application {
+public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Load user settings to apply theme from the beginning
         Properties settings = loadSettings();
-        
-        Scraper scraper = new Scraper("https://mediko.gazi.edu.tr/view/page/20412");
-        FXMLLoader fxmlLoader = SceneFactory.getScene("PROTEST");
+
+        // Load Meals
+        Scraper scraper = Scraper.getInstance();
+        DBMealListUpdater.getInstance().updateList(scraper);
+
+        FXMLLoader fxmlLoader = SceneFactory.getScene("MAIN");
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         
         // First add the base stylesheet
@@ -46,7 +50,7 @@ public class ProTestApp extends Application {
         stage.show();
         
         // Get the controller and set the dark mode
-        ProTestController controller = fxmlLoader.getController();
+        MainController controller = fxmlLoader.getController();
         controller.setDarkMode(isDarkMode);
     }
     

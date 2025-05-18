@@ -3,6 +3,7 @@ package yemekhanetakip.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import yemekhanetakip.Main;
 import yemekhanetakip.User;
 import yemekhanetakip.db.UserDBManager;
 import javafx.scene.media.MediaPlayer;
@@ -80,8 +81,6 @@ public class ProfileController {
             loginMessageLabel.setText("Giriş başarılı! Hoş geldiniz, " + user.getFullName());
 
             User.current = user;
-            // TODO: Update UI to show user is logged in
-            // TODO: Store user information in session
         }
         else
         {

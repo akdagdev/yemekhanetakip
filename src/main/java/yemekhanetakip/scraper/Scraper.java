@@ -19,6 +19,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Scraper {
+    public static final String URL = "https://mediko.gazi.edu.tr/view/page/20412";
+
+    private static Scraper instance;
+    public static Scraper getInstance() {
+        if (instance == null) {
+            instance = new Scraper(URL);
+        }
+        return instance;
+    }
+
+
     private Document document;
     private final HashMap<LocalDate, ArrayList<String>> courses = new HashMap<>();
     private final HashMap<LocalDate, String> calories = new HashMap<>();
@@ -46,7 +57,7 @@ public class Scraper {
     }
 
     // Constructor
-    public Scraper(String url) {
+    private Scraper(String url) {
 
         // Reads the website from the internet and sets it as the document
         // This class is designed especially for scraping https://mediko.gazi.edu.tr/view/page/20412

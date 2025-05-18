@@ -1,16 +1,26 @@
-package yemekhanetakip;
+package yemekhanetakip.db;
 
-import yemekhanetakip.db.MealDBManager;
 import yemekhanetakip.scraper.Scraper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class ScraperToDatabaseTESTclass {
-    public static void main(String[] args) {
-        Scraper scraper = new Scraper("https://mediko.gazi.edu.tr/view/page/20412");
+public class DBMealListUpdater {
 
+    // Singleton design pattern
+    private static DBMealListUpdater instance;
+    public static DBMealListUpdater getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new DBMealListUpdater();
+        }
+        return instance;
+    }
+
+    // Adds each meal to the database if it doesn't exist yet
+    public void updateList(Scraper scraper) {
         HashSet<String> yemekSeti = new HashSet<>();
 
         for (LocalDate tarih : scraper.getCourses().keySet()) {
@@ -18,7 +28,6 @@ public class ScraperToDatabaseTESTclass {
 
             for (String yemek : yemekler) {
                 if (yemek != null && !yemek.isBlank()) {
-
                     yemekSeti.add(yemek);
                 }
             }
