@@ -3,12 +3,11 @@ package yemekhanetakip.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import yemekhanetakip.Main;
 import yemekhanetakip.User;
 import yemekhanetakip.db.UserDBManager;
 import javafx.scene.media.MediaPlayer;
 
-public class ProfileController {
+public class LoginContoller {
     
     @FXML
     private TextField loginUsername;

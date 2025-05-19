@@ -133,7 +133,6 @@ public class SettingsController {
     
     public void setMainController(MainController controller) {
         this.mainController = controller;
-        System.out.println("Main controller set in settings controller");
         
         // Apply current theme setting immediately
         if (themeSelector.getValue() != null) {

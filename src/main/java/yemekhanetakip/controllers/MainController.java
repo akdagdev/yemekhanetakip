@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert;
-import yemekhanetakip.SceneFactory;
 import yemekhanetakip.scraper.Scraper;
 import yemekhanetakip.db.FavoritesDBManager;
 import yemekhanetakip.db.MealDBManager;
@@ -593,7 +592,6 @@ public class MainController {
 
             // Set this controller as the main controller
             settingsController.setMainController(this);
-            System.out.println("Main controller passed to settings controller");
 
             // Replace content in the main content area
             if (contentPane != null) {
@@ -635,18 +633,18 @@ public class MainController {
             FXMLLoader loader;
             if (User.current == null) {
                 // If the user is not logged in
-                // Load the Profile.fxml
-                loader = SceneFactory.getScene("PROFILE");
+                // Load the Login.fxml
+                loader = SceneFactory.getScene("LOGIN");
 
                 // Get the controller
-                ProfileController profileController = loader.getController();
+                LoginContoller loginContoller = loader.getController();
                 // TODO: Handle logged in state in profile view
             } else {
                 // If the user is logged in
                 loader = SceneFactory.getScene("USER_PROFILE");
 
                 // Get the controller
-                ProfileController profileController = loader.getController();
+                LoginContoller loginContoller = loader.getController();
             }
 
             Parent profileView = loader.load();

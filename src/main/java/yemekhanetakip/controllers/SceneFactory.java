@@ -1,4 +1,4 @@
-package yemekhanetakip;
+package yemekhanetakip.controllers;
 
 import javafx.fxml.FXMLLoader;
 
@@ -7,7 +7,7 @@ public class SceneFactory {
     // Static FXML paths
     private static final String FAVORITES = "/yemekhanetakip/Favorites.fxml";
     private static final String FOODS = "/yemekhanetakip/Foods.fxml";
-    private static final String PROFILE = "/yemekhanetakip/Profile.fxml";
+    private static final String LOGIN = "/yemekhanetakip/Login.fxml";
     private static final String PRO_TEST = "/yemekhanetakip/Main.fxml";
     private static final String SETTINGS = "/yemekhanetakip/Settings.fxml";
     private static final String USER_PROFILE = "/yemekhanetakip/UserProfile.fxml";
@@ -19,8 +19,8 @@ public class SceneFactory {
                 return new FXMLLoader(SceneFactory.class.getResource(FAVORITES));
             case "FOODS":
                 return new FXMLLoader(SceneFactory.class.getResource(FOODS));
-            case "PROFILE":
-                return new FXMLLoader(SceneFactory.class.getResource(PROFILE));
+            case "LOGIN":
+                return new FXMLLoader(SceneFactory.class.getResource(LOGIN));
             case "MAIN":
                 return new FXMLLoader(SceneFactory.class.getResource(PRO_TEST));
             case "SETTINGS":

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import yemekhanetakip.controllers.MainController;
+import yemekhanetakip.controllers.SceneFactory;
 import yemekhanetakip.db.DBMealListUpdater;
 import yemekhanetakip.scraper.Scraper;
 

@@ -20,7 +20,7 @@ public class UserProfileController {
     @FXML private VBox notificationsPanel;
 
     @FXML
-    private void initialize() {
+    public void initialize() {
 
         // Populate labels with the current user's data
         if (User.current != null) {
