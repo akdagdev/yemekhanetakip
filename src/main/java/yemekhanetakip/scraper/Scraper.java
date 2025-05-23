@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Scraper {
-    public static final String URL = "https://mediko.gazi.edu.tr/view/page/20412";
-
     private static Scraper instance;
     public static Scraper getInstance() {
         if (instance == null) {
@@ -29,10 +27,14 @@ public class Scraper {
         return instance;
     }
 
-
+    private static final String URL = "https://mediko.gazi.edu.tr/view/page/20412";
     private Document document;
     private final HashMap<LocalDate, ArrayList<String>> courses = new HashMap<>();
     private final HashMap<LocalDate, String> calories = new HashMap<>();
+
+    public static String getURL() {
+        return URL;
+    }
 
     public Document getDocument() {
         return document;
@@ -72,7 +74,7 @@ public class Scraper {
             for (int i = 0; i < table.length; i++) {
                 for (int j = 0; j < table[i].length; j++) {
                     // Skip empty entries
-                    if(table[i][j].isBlank()){
+                    if(table[i][j] == null || table[i][j].isBlank()){
                         continue;
                     }
 

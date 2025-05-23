@@ -52,7 +52,7 @@ public class MealDBManager extends DatabaseManager {
 
     private int addMealInternal(String mealName)
     {
-        final String SQL = "INSERT INTO meals (meal_name,meal_av_rate) VALUES (?,0)";
+        final String SQL = "INSERT INTO meals (meal_name) VALUES (?)";
 
         try (Connection c = getConnection();
              PreparedStatement ps = c.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)

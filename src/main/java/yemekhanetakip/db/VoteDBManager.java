@@ -16,6 +16,7 @@ public class VoteDBManager extends DatabaseManager {
         {
             instance = new VoteDBManager();
         }
+
         return instance;
     }
 
