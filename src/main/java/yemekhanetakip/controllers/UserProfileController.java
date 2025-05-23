@@ -2,9 +2,8 @@ package yemekhanetakip.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import yemekhanetakip.User;
+import yemekhanetakip.user.User;
 
 public class UserProfileController {
 

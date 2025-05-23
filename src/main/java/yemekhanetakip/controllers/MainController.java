@@ -17,7 +17,7 @@ import javafx.scene.control.Alert;
 import yemekhanetakip.scraper.Scraper;
 import yemekhanetakip.db.FavoritesDBManager;
 import yemekhanetakip.db.MealDBManager;
-import yemekhanetakip.User;
+import yemekhanetakip.user.User;
 
 import java.io.IOException;
 import java.time.LocalDate;

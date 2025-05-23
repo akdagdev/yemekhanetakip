@@ -15,4 +15,6 @@ module com.example.yemekhanetakip {
     opens yemekhanetakip.controllers to javafx.fxml;
     exports yemekhanetakip.scraper;
     opens yemekhanetakip.scraper to javafx.fxml;
+    exports yemekhanetakip.user;
+    opens yemekhanetakip.user to javafx.fxml;
 }

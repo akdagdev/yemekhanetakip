@@ -3,7 +3,7 @@ package yemekhanetakip.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import yemekhanetakip.User;
+import yemekhanetakip.user.User;
 import yemekhanetakip.db.UserDBManager;
 import javafx.scene.media.MediaPlayer;
 
@@ -72,14 +72,15 @@ public class LoginContoller {
         }
         
         // Attempt to authenticate the user
-        User user = dbManager.authenticateUser(username, password);
+        User attempt_user = dbManager.authenticateUser(username, password);
 
-        if (user != null)
+        if (attempt_user != null)
         {
             loginMessageLabel.setTextFill(Color.GREEN);
-            loginMessageLabel.setText("Giriş başarılı! Hoş geldiniz, " + user.getFullName());
+            loginMessageLabel.setText("Giriş başarılı! Hoş geldiniz, " + attempt_user.getFullName());
 
-            User.current = user;
+            User user = new User();
+            user.login(attempt_user.getId(), attempt_user.getEmail(), attempt_user.getEmail(), attempt_user.getUsername());
         }
         else
         {

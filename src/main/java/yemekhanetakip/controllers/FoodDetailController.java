@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
-import yemekhanetakip.User;
+import yemekhanetakip.user.User;
 import yemekhanetakip.db.MealDBManager;
 import yemekhanetakip.db.VoteDBManager;
 import java.sql.Connection;

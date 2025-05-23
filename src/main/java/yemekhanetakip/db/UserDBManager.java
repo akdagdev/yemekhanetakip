@@ -1,6 +1,6 @@
 package yemekhanetakip.db;
 
-import yemekhanetakip.User;
+import yemekhanetakip.user.User;
 
 import java.sql.*;
 import java.util.logging.Level;
