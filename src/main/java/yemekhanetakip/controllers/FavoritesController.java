@@ -67,7 +67,7 @@ public class FavoritesController {
             }
         }
         
-        List<FavoritesDBManager.FavoriteMeal> favorites = dbManager.getFavoritesByUserId(User.current.getId());
+        List<FavoritesDBManager.FavoriteMeal> favorites = dbManager.getFavoritesByUserId(User.current.getId(), orderBy);
         
         if (favorites.isEmpty()) {
             noFavoritesLabel.setVisible(true);

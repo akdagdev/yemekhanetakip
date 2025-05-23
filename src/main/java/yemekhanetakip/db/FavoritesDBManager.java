@@ -74,7 +74,8 @@ public class FavoritesDBManager extends DatabaseManager {
             String query = "SELECT f.meal_id, m.meal_name " +
                     "FROM favorites f " +
                     "JOIN meals m ON f.meal_id = m.meal_id " +
-                    "WHERE f.user_id = ?";
+                    "WHERE f.user_id = ? "+
+                    "ORDER BY " + orderBy;
 
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, userId);

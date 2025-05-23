@@ -80,7 +80,7 @@ public class LoginContoller {
             loginMessageLabel.setText("Giriş başarılı! Hoş geldiniz, " + attempt_user.getFullName());
 
             User user = new User();
-            user.login(attempt_user.getId(), attempt_user.getEmail(), attempt_user.getEmail(), attempt_user.getUsername());
+            user.login(attempt_user.getId(), attempt_user.getFullName(), attempt_user.getEmail(), attempt_user.getUsername());
         }
         else
         {

@@ -11,6 +11,18 @@ public abstract class DatabaseManager  {
     private static final String DB_USER = "root";
     private static final String DB_PASS = "rv9yl2qc";
 
+    public static String getDbUrl() {
+        return DB_URL;
+    }
+
+    public static String getDbUser() {
+        return DB_USER;
+    }
+
+    public static String getDbPass() {
+        return DB_PASS;
+    }
+
     // Connect to database
     public Connection getConnection() throws SQLException
     {
